@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHandler {
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=unwetter;user=sa;password=root;encrypt=false";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=unwetter;user=sa;password=12345;encrypt=false";
 
     public static Connection getConnection() throws Exception {
         return DriverManager.getConnection(URL);
