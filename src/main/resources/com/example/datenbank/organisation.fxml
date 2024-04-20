@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.OrganisationController">
 <children>
     <GridPane layoutX="192.0" layoutY="39.0">
         <columnConstraints>
@@ -35,7 +35,7 @@
                 </rowConstraints>
             </GridPane>
             <TextField />
-            <TextField prefHeight="20.0" prefWidth="200.0" GridPane.rowIndex="1" />
+            <TextField fx:id="name" prefHeight="20.0" prefWidth="200.0" GridPane.rowIndex="1" />
         </children>
     </GridPane>
     <GridPane layoutX="24.0" layoutY="39.0" prefHeight="61.0" prefWidth="144.0">
@@ -59,30 +59,30 @@
             </Label>
         </children>
     </GridPane>
-    <Button layoutX="48.0" layoutY="124.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" text="NEW">
+    <Button fx:id="btnNew" layoutX="48.0" layoutY="124.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="84.0" text="NEW">
         <font>
             <Font name="System Bold" size="14.0" />
         </font>
     </Button>
-    <Button layoutX="150.0" layoutY="124.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" text="SAVE" textAlignment="CENTER">
+    <Button fx:id="btnSave" layoutX="150.0" layoutY="124.0" mnemonicParsing="false" onAction="#addOrganisation" prefHeight="26.0" prefWidth="84.0" text="SAVE" textAlignment="CENTER">
         <font>
             <Font name="System Bold" size="14.0" />
         </font>
     </Button>
-    <Button layoutX="250.0" layoutY="124.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" text="UPDATE">
+    <Button fx:id="btnUpdate" layoutX="250.0" layoutY="124.0" mnemonicParsing="false" onAction="#updateOrganisation" prefHeight="26.0" prefWidth="84.0" text="UPDATE">
         <font>
             <Font name="System Bold" size="14.0" />
         </font>
     </Button>
-    <Button layoutX="350.0" layoutY="124.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" text="DELETE">
+    <Button fx:id="btnDelete" layoutX="350.0" layoutY="124.0" mnemonicParsing="false" onAction="#deleteOrganisation" prefHeight="26.0" prefWidth="84.0" text="DELETE">
         <font>
             <Font name="System Bold" size="14.0" />
         </font>
     </Button>
-    <TableView fx:id="tableView" layoutX="29.0" layoutY="175.0" prefHeight="200.0" prefWidth="486.0">
+    <TableView fx:id="tableView" layoutX="29.0" layoutY="175.0" onMouseClicked="#mouseClicked" prefHeight="200.0" prefWidth="486.0">
         <columns>
-            <TableColumn fx:id="idColumn" prefWidth="117.60003662109375" text="ID" />
-            <TableColumn fx:id="nameColumn" prefWidth="426.4000244140625" text="Name" />
+            <TableColumn fx:id="collId" prefWidth="117.60003662109375" text="ID" />
+            <TableColumn fx:id="organisationName" prefWidth="367.1999877929687" text="Name" />
         </columns>
     </TableView>
 </children>
