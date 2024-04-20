@@ -14,6 +14,8 @@ public class Schaden {
         this.beschreibung = beschreibung;
     }
 
+
+
     public int getSchadenID() {
         return schadenID;
     }
@@ -38,5 +40,12 @@ public class Schaden {
         this.beschreibung = beschreibung;
     }
 
-    // Методы toString(), equals(), hashCode() и т.д.
+    @Override
+    public String toString() {
+        return "Schaden{" +
+                "schadenID=" + schadenID +
+                ", hoehe=" + hoehe +
+                ", beschreibung='" + beschreibung + '\'' +
+                '}';
+    }
 }
