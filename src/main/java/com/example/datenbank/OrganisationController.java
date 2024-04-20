@@ -8,7 +8,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.w3c.dom.events.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -51,14 +50,14 @@ public class OrganisationController implements Initializable {
     @FXML
     private void addOrganisation(){
         Organisation organisation = new Organisation(name.getText());
-        DatabaseHandler handler = new DatabaseHandler();
+        OrganisationCRUD handler = new OrganisationCRUD();
         handler.addOrganisation(organisation);
         showOrganisation();
     }
 
     @FXML
     private void showOrganisation(){
-        DatabaseHandler handler = new DatabaseHandler();
+        OrganisationCRUD handler = new OrganisationCRUD();
         ObservableList<Organisation> list = handler.getOrganisationList();
         collId.setCellValueFactory(new PropertyValueFactory<Organisation, Integer>("id"));
         organisationName.setCellValueFactory(new PropertyValueFactory<Organisation, String>("name"));
@@ -100,7 +99,7 @@ public class OrganisationController implements Initializable {
 
     public void updateOrganisation(){
         try{
-            DatabaseHandler handler = new DatabaseHandler();
+            OrganisationCRUD handler = new OrganisationCRUD();
             Organisation organisation = new Organisation(this.organisation.getId(), this.organisation.getName());
             handler.updateOrganisation(organisation);
             showOrganisation();
@@ -115,7 +114,7 @@ public class OrganisationController implements Initializable {
 
     public void deleteOrganisation(){
         try{
-            DatabaseHandler handler = new DatabaseHandler();
+            OrganisationCRUD handler = new OrganisationCRUD();
             Organisation organisation = new Organisation(this.organisation.getId(), this.organisation.getName());
             handler.delete(organisation);
             showOrganisation();

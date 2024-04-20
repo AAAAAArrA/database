@@ -29,7 +29,7 @@ public class Controller {
 //    }
 
 //    private ObservableList<Region> getRegionList() {
-//        List<Region> list = DatabaseHandler.getRegions();
+//        List<Region> list = OrganisationCRUD.getRegions();
 //        return FXCollections.observableArrayList(list);
 //    }
 }

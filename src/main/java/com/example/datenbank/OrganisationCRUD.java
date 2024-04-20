@@ -1,17 +1,12 @@
 package com.example.datenbank;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 
-public class DatabaseHandler {
+public class OrganisationCRUD {
 //    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=unwetter;user=sa;password=12345;encrypt=false";
 //
 //    public static Connection getConnection() throws Exception {
