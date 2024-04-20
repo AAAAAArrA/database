@@ -100,7 +100,7 @@ public class OrganisationController implements Initializable {
     public void updateOrganisation(){
         try{
             OrganisationCRUD handler = new OrganisationCRUD();
-            Organisation organisation = new Organisation(this.organisation.getId(), this.organisation.getName());
+            Organisation organisation = new Organisation(this.organisation.getId(), name.getText());
             handler.updateOrganisation(organisation);
             showOrganisation();
             clearFields();
