@@ -12,29 +12,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHandler {
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=unwetter;user=sa;password=12345;encrypt=false";
+//    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=unwetter;user=sa;password=12345;encrypt=false";
+//
+//    public static Connection getConnection() throws Exception {
+//        return DriverManager.getConnection(URL);
+//    }
 
-    public static Connection getConnection() throws Exception {
-        return DriverManager.getConnection(URL);
-    }
+    private DBConnection conn = new DBConnection();
 
-    public static List<Region> getRegions() {
-        List<Region> regions = new ArrayList<>();
-        String sql = "SELECT * FROM Region";
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                Region region = new Region();
-                region.setId(rs.getInt("Region_ID"));
-                region.setName(rs.getString("Name"));
-                regions.add(region);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return regions;
-    }
+//    public static List<Region> getRegions() {
+//        List<Region> regions = new ArrayList<>();
+//        String sql = "SELECT * FROM Region";
+//        try (Connection conn = getConnection();
+//             PreparedStatement stmt = conn.prepareStatement(sql);
+//             ResultSet rs = stmt.executeQuery()) {
+//            while (rs.next()) {
+//                Region region = new Region();
+//                region.setId(rs.getInt("Region_ID"));
+//                region.setName(rs.getString("Name"));
+//                regions.add(region);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return regions;
+//    }
 
 //    public static List<Organisation> getOrganisations(){
 //        List<Organisation> organisations = new ArrayList<>();
@@ -57,8 +59,9 @@ public class DatabaseHandler {
     public void addOrganisation(Organisation organisation){
         String sql = "insert into Organisation(Name) values(?)";
         try {
-            Connection conn = getConnection();
-            PreparedStatement st = conn.prepareStatement(sql);
+            conn.getDBConnection();
+//            Connection conn = getConnection();
+            PreparedStatement st = conn.getCon().prepareStatement(sql);
             st.setString(1,organisation.getName());
             st.execute();
             st.close();
@@ -71,8 +74,9 @@ public class DatabaseHandler {
         ObservableList<Organisation> list = FXCollections.observableArrayList();
         String query = "SELECT * FROM Organisation";
         try{
-            Connection conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query);
+            conn.getDBConnection();
+//            Connection conn = getConnection();
+            PreparedStatement stmt = conn.getCon().prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             Organisation organisation;
             while (rs.next()){
@@ -92,8 +96,9 @@ public class DatabaseHandler {
 
     public void updateOrganisation(Organisation organisation){
         try{
-            Connection conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE [Organisation]\n" +
+            conn.getDBConnection();
+//            Connection conn = getConnection();
+            PreparedStatement stmt = conn.getCon().prepareStatement("UPDATE [Organisation]\n" +
                     "   SET [Name] = ?\n" +
                     " WHERE [Organisation_ID] = ?");
 
@@ -110,8 +115,9 @@ public class DatabaseHandler {
 
     public void delete(Organisation organisation){
         try{
-            Connection conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM [Organisation] WHERE [Organisation_ID] = ?");
+            conn.getDBConnection();
+//            Connection conn = getConnection();
+            PreparedStatement stmt = conn.getCon().prepareStatement("DELETE FROM [Organisation] WHERE [Organisation_ID] = ?");
 
             stmt.setInt(1, organisation.getId());
             stmt.execute();

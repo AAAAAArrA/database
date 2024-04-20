@@ -20,17 +20,17 @@ public class Controller {
     @FXML
     private TableColumn<Region, String> nameColumn;
 
-    @FXML
-    public void initialize() {
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+//    @FXML
+//    public void initialize() {
+//        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+//
+//        tableView.setItems(getRegionList());
+//    }
 
-        tableView.setItems(getRegionList());
-    }
-
-    private ObservableList<Region> getRegionList() {
-        List<Region> list = DatabaseHandler.getRegions();
-        return FXCollections.observableArrayList(list);
-    }
+//    private ObservableList<Region> getRegionList() {
+//        List<Region> list = DatabaseHandler.getRegions();
+//        return FXCollections.observableArrayList(list);
+//    }
 }
 
