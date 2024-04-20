@@ -93,9 +93,7 @@ public class DatabaseHandler {
     public void updateOrganisation(Organisation organisation){
         try{
             Connection conn = getConnection();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE [Organisation]\n" +
-                    "   SET [Name] = ?\n" +
-                    " WHERE [Organisation_ID] = ?");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE [Organisation] SET [Name] = ? WHERE [Organisation_ID] = ?");
 
             stmt.setString(1, organisation.getName());
             stmt.setInt(2, organisation.getId());
