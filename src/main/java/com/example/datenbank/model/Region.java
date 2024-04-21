@@ -1,18 +1,19 @@
-package com.example.datenbank;
+package com.example.datenbank.model;
 
-public class Organisation {
+public class Region {
     private int id;
     private String name;
 
-    public Organisation(int id, String name) {
+    public Region(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Organisation(String name) {
+    public Region(String name) {
         this.name = name;
     }
 
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -29,9 +30,11 @@ public class Organisation {
         this.name = name;
     }
 
+    // For TableView display
+
     @Override
     public String toString() {
-        return "Organisation{" +
+        return "Region{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

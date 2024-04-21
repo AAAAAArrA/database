@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="488.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.OrganisationController">
+<AnchorPane prefHeight="488.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.EinsatzController">
     <children>
         <GridPane layoutX="192.0" layoutY="39.0">
             <columnConstraints>
@@ -48,17 +48,17 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnSave" layoutX="150.0" layoutY="214.0" mnemonicParsing="false" onAction="#addOrganisation" prefHeight="26.0" prefWidth="84.0" text="SAVE" textAlignment="CENTER">
+        <Button fx:id="btnSave" layoutX="150.0" layoutY="214.0" mnemonicParsing="false" onAction="#addEinsatz" prefHeight="26.0" prefWidth="84.0" text="SAVE" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnUpdate" layoutX="250.0" layoutY="214.0" mnemonicParsing="false" onAction="#updateOrganisation" prefHeight="26.0" prefWidth="84.0" text="UPDATE">
+        <Button fx:id="btnUpdate" layoutX="250.0" layoutY="214.0" mnemonicParsing="false" onAction="#updateEinsatz" prefHeight="26.0" prefWidth="84.0" text="UPDATE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnDelete" layoutX="350.0" layoutY="214.0" mnemonicParsing="false" onAction="#deleteOrganisation" prefHeight="26.0" prefWidth="84.0" text="DELETE">
+        <Button fx:id="btnDelete" layoutX="350.0" layoutY="214.0" mnemonicParsing="false" onAction="#deleteEinsatz" prefHeight="26.0" prefWidth="84.0" text="DELETE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -66,12 +66,12 @@
         <TableView fx:id="tableView" layoutX="24.0" layoutY="266.0" onMouseClicked="#mouseClicked" prefHeight="199.0" prefWidth="549.0">
             <columns>
                 <TableColumn fx:id="collId" prefWidth="37.5999755859375" text="ID" />
-                <TableColumn fx:id="organisationName" prefWidth="100.0" text="Er.Unwetter" />
+                <TableColumn prefWidth="100.0" text="Er.Unwetter" />
             <TableColumn prefWidth="100.0" text="Er.Region" />
             <TableColumn prefWidth="100.0" text="Er.Schaden" />
-            <TableColumn prefWidth="100.0" text="Organisation" />
-            <TableColumn prefWidth="100.0" text="Beginn" />
-            <TableColumn prefWidth="100.0" text="Ende" />
+            <TableColumn fx:id="organisationName" prefWidth="100.0" text="Organisation" />
+            <TableColumn fx:id="beginn" prefWidth="100.0" text="Beginn" />
+            <TableColumn fx:id="ende" prefWidth="100.0" text="Ende" />
             </columns>
         </TableView>
       <GridPane layoutX="32.0" layoutY="39.0" prefHeight="110.0" prefWidth="160.0">

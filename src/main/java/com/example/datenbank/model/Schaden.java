@@ -1,4 +1,4 @@
-package com.example.datenbank;
+package com.example.datenbank.model;
 
 import java.math.BigDecimal;
 

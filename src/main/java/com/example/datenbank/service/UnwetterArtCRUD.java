@@ -1,5 +1,7 @@
-package com.example.datenbank;
+package com.example.datenbank.service;
 
+import com.example.datenbank.DBConnection;
+import com.example.datenbank.model.UnwetterArt;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

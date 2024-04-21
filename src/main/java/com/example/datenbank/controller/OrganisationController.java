@@ -1,5 +1,7 @@
-package com.example.datenbank;
+package com.example.datenbank.controller;
 
+import com.example.datenbank.model.Organisation;
+import com.example.datenbank.service.OrganisationCRUD;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,10 +14,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegionController implements Initializable {
+public class OrganisationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        showRegion();
+        showOrganisation();
         btnUpdate.setDisable(true);
         btnDelete.setDisable(true);
     }
@@ -37,30 +39,30 @@ public class RegionController implements Initializable {
     public Button btnDelete;
 
     @FXML
-    public TableView<Region> tableView;
+    public TableView<Organisation> tableView;
 
     @FXML
-    public TableColumn<Region, Integer> collId;
+    public TableColumn<Organisation, Integer> collId;
 
     @FXML
-    public TableColumn<Region, String> regionName;
+    public TableColumn<Organisation, String> organisationName;
 
-    private Region region;
+    private Organisation organisation;
 
     @FXML
-    private void addRegion(){
-       Region region = new Region(name.getText());
-        RegionCRUD handler = new RegionCRUD();
-        handler.addRegion(region);
-        showRegion();
+    private void addOrganisation(){
+        Organisation organisation = new Organisation(name.getText());
+        OrganisationCRUD handler = new OrganisationCRUD();
+        handler.addOrganisation(organisation);
+        showOrganisation();
     }
 
     @FXML
-    private void showRegion(){
-        RegionCRUD handler = new RegionCRUD();
-        ObservableList<Region> list = handler.getRegionList();
-        collId.setCellValueFactory(new PropertyValueFactory<Region, Integer>("id"));
-        regionName.setCellValueFactory(new PropertyValueFactory<Region, String>("name"));
+    private void showOrganisation(){
+        OrganisationCRUD handler = new OrganisationCRUD();
+        ObservableList<Organisation> list = handler.getOrganisationList();
+        collId.setCellValueFactory(new PropertyValueFactory<Organisation, Integer>("id"));
+        organisationName.setCellValueFactory(new PropertyValueFactory<Organisation, String>("name"));
         tableView.setItems(list);
     }
 
@@ -83,11 +85,11 @@ public class RegionController implements Initializable {
 
     public void mouseClicked(javafx.scene.input.MouseEvent mouseEvent) {
         try{
-            Region region = tableView.getSelectionModel().getSelectedItem();
-            region = new Region(region.getId(), region.getName());
-            this.region= region;
+            Organisation organisation = tableView.getSelectionModel().getSelectedItem();
+            organisation = new Organisation(organisation.getId(), organisation.getName());
+            this.organisation = organisation;
 
-            name.setText(region.getName());
+            name.setText(organisation.getName());
             btnUpdate.setDisable(false);
             btnDelete.setDisable(false);
             btnSave.setDisable(true);
@@ -97,12 +99,12 @@ public class RegionController implements Initializable {
         }
     }
 
-    public void updateRegion(){
+    public void updateOrganisation(){
         try{
-            RegionCRUD handler = new RegionCRUD();
-            Region region = new Region(this.region.getId(), name.getText());
-            handler.updateRegion(region);
-            showRegion();
+            OrganisationCRUD handler = new OrganisationCRUD();
+            Organisation organisation = new Organisation(this.organisation.getId(), name.getText());
+            handler.updateOrganisation(organisation);
+            showOrganisation();
             clearFields();
             btnUpdate.setDisable(true);
             btnDelete.setDisable(true);
@@ -112,12 +114,12 @@ public class RegionController implements Initializable {
         }
     }
 
-    public void deleteRegion(){
+    public void deleteOrganisation(){
         try{
-            RegionCRUD handler = new RegionCRUD();
-            Region region = new Region(this.region.getId(), this.region.getName());
-            handler.deleteRegion(region);
-            showRegion();
+            OrganisationCRUD handler = new OrganisationCRUD();
+            Organisation organisation = new Organisation(this.organisation.getId(), this.organisation.getName());
+            handler.delete(organisation);
+            showOrganisation();
             clearFields();
             btnUpdate.setDisable(true);
             btnDelete.setDisable(true);

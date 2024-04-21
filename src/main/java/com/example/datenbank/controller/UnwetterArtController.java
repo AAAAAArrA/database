@@ -1,6 +1,8 @@
-package com.example.datenbank;
+package com.example.datenbank.controller;
 
 
+import com.example.datenbank.model.UnwetterArt;
+import com.example.datenbank.service.UnwetterArtCRUD;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
