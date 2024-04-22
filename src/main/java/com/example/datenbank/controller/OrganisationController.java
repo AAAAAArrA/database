@@ -66,23 +66,6 @@ public class OrganisationController implements Initializable {
         tableView.setItems(list);
     }
 
-
-//    @FXML
-//    public void mouseClicked (MouseEvent e){
-//        try{
-//            Organisation organisation = tableView.getSelectionModel().getSelectedItem();
-//            organisation = new Organisation(organisation.getId(), organisation.getName());
-//            this.organisation = organisation;
-//            name.setText(organisation.getName());
-//            btnUpdate.setDisable(false);
-//            btnDelete.setDisable(false);
-//
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//        }
-//    }
-
-
     public void mouseClicked(javafx.scene.input.MouseEvent mouseEvent) {
         try{
             Organisation organisation = tableView.getSelectionModel().getSelectedItem();

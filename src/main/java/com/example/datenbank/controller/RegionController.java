@@ -5,10 +5,7 @@ import com.example.datenbank.service.RegionCRUD;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -66,23 +63,6 @@ public class RegionController implements Initializable {
         tableView.setItems(list);
     }
 
-
-//    @FXML
-//    public void mouseClicked (MouseEvent e){
-//        try{
-//            Organisation organisation = tableView.getSelectionModel().getSelectedItem();
-//            organisation = new Organisation(organisation.getId(), organisation.getName());
-//            this.organisation = organisation;
-//            name.setText(organisation.getName());
-//            btnUpdate.setDisable(false);
-//            btnDelete.setDisable(false);
-//
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//        }
-//    }
-
-
     public void mouseClicked(javafx.scene.input.MouseEvent mouseEvent) {
         try{
             Region region = tableView.getSelectionModel().getSelectedItem();
@@ -99,35 +79,70 @@ public class RegionController implements Initializable {
         }
     }
 
-    public void updateRegion(){
-        try{
-            RegionCRUD handler = new RegionCRUD();
-            Region region = new Region(this.region.getId(), name.getText());
-            handler.updateRegion(region);
-            showRegion();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
-
-        }catch (Exception e){
-            e.printStackTrace();
+    public void updateRegion() {
+        if (this.region == null) {
+            showAlert("Error", "Region not selected.");
+            return;
         }
+        String regionName = this.region.getName();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure, you want to update the region " + regionName + "?",
+                ButtonType.YES, ButtonType.NO);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    RegionCRUD handler = new RegionCRUD();
+                    Region region = new Region(this.region.getId(), name.getText()); // Здесь мы используем TextField для обновления имени.
+                    handler.updateRegion(region);
+                    showRegion();
+                    clearFields();
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Update error", "Failed to update region: " + e.getMessage());
+                }
+            }
+        });
     }
 
-    public void deleteRegion(){
-        try{
-            RegionCRUD handler = new RegionCRUD();
-            Region region = new Region(this.region.getId(), this.region.getName());
-            handler.deleteRegion(region);
-            showRegion();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
+
+
+    public void deleteRegion() {
+        if (this.region == null) {
+            showAlert("Error","Region not selected.");
+            return;
+        }
+
+        String regionName = this.region.getName();
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure, you want to remove the region " + regionName + "?",
+                ButtonType.YES, ButtonType.NO);
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    RegionCRUD handler = new RegionCRUD();
+                    handler.deleteRegion(this.region);
+                    showRegion();
+                    clearFields();
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    showAlert("Delete error", "Failed to delete region: " + e.getMessage());
+                }
+            }
+        });
+    }
+
 
     private  void clearFields(){
         name.setText("");

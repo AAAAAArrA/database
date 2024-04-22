@@ -9,55 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class OrganisationCRUD {
-//    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=unwetter;user=sa;password=12345;encrypt=false";
-//
-//    public static Connection getConnection() throws Exception {
-//        return DriverManager.getConnection(URL);
-//    }
-
     private DBConnection conn = new DBConnection();
-
-//    public static List<Region> getRegions() {
-//        List<Region> regions = new ArrayList<>();
-//        String sql = "SELECT * FROM Region";
-//        try (Connection conn = getConnection();
-//             PreparedStatement stmt = conn.prepareStatement(sql);
-//             ResultSet rs = stmt.executeQuery()) {
-//            while (rs.next()) {
-//                Region region = new Region();
-//                region.setId(rs.getInt("Region_ID"));
-//                region.setName(rs.getString("Name"));
-//                regions.add(region);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return regions;
-//    }
-
-//    public static List<Organisation> getOrganisations(){
-//        List<Organisation> organisations = new ArrayList<>();
-//        String sql = "SELECT * FROM Organisation";
-//        try (Connection conn = getConnection();
-//             PreparedStatement stmt = conn.prepareStatement(sql);
-//             ResultSet rs = stmt.executeQuery()) {
-//            while (rs.next()) {
-//                Organisation organisation = new Organisation();
-//                organisation.setId(rs.getInt("Organisation_ID"));
-//                organisation.setName(rs.getString("Name"));
-//                organisations.add(organisation);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return organisations;
-//    }
-
     public void addOrganisation(Organisation organisation){
         String sql = "insert into Organisation(Name) values(?)";
         try {
             conn.getDBConnection();
-//            Connection conn = getConnection();
+
             PreparedStatement st = conn.getCon().prepareStatement(sql);
             st.setString(1,organisation.getName());
             st.execute();
@@ -72,7 +29,7 @@ public class OrganisationCRUD {
         String query = "SELECT * FROM Organisation";
         try{
             conn.getDBConnection();
-//            Connection conn = getConnection();
+
             PreparedStatement stmt = conn.getCon().prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             Organisation organisation;
@@ -94,7 +51,6 @@ public class OrganisationCRUD {
     public void updateOrganisation(Organisation organisation){
         try{
             conn.getDBConnection();
-//            Connection conn = getConnection();
             PreparedStatement stmt = conn.getCon().prepareStatement("UPDATE [Organisation]\n" +
                     "   SET [Name] = ?\n" +
                     " WHERE [Organisation_ID] = ?");
@@ -113,7 +69,6 @@ public class OrganisationCRUD {
     public void delete(Organisation organisation){
         try{
             conn.getDBConnection();
-//            Connection conn = getConnection();
             PreparedStatement stmt = conn.getCon().prepareStatement("DELETE FROM [Organisation] WHERE [Organisation_ID] = ?");
 
             stmt.setInt(1, organisation.getId());

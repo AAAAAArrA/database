@@ -5,10 +5,7 @@ import com.example.datenbank.service.SchadenCRUD;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -80,41 +77,79 @@ public class SchadenController implements Initializable {
     }
 
     public void updateSchaden() {
-        try {
-            // Convert the text field input for hoehe from String to BigDecimal
-            BigDecimal hoehe = new BigDecimal(tfHoehe.getText());
-            String beschreibung = tfBeschreibung.getText();
-            int schadenID = schaden.getSchadenID();  // Assuming selectedSchaden is an already selected instance of Schaden
-
-            // Create a new Schaden object with the correct types for parameters
-            Schaden schaden = new Schaden(schadenID, hoehe, beschreibung);
-
-            SchadenCRUD handler = new SchadenCRUD();
-            handler.updateSchaden(schaden);
-            showSchaden();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
-        } catch (NumberFormatException e) {
-            // Handle the case where the input string cannot be converted to BigDecimal
-            System.out.println("Input format error: " + e.getMessage());
-            // Implement more comprehensive error handling depending on your application requirements
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (schaden == null) {
+            showAlert("Error", "No Schaden object selected.");
+            return;
         }
+
+
+        String beschreibung = schaden.getBeschreibung();
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure, you want to update Schaden with the description: " + beschreibung + "?",
+                ButtonType.YES, ButtonType.NO);
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    BigDecimal hoehe = new BigDecimal(tfHoehe.getText());
+                    String beschreibungg = tfBeschreibung.getText();
+                    int schadenID = schaden.getSchadenID();
+
+                    Schaden newSchaden = new Schaden(schadenID, hoehe, beschreibungg);
+
+                    SchadenCRUD handler = new SchadenCRUD();
+                    handler.updateSchaden(newSchaden);
+                    showSchaden();
+                    clearFields();
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (NumberFormatException e) {
+                    showAlert("Format error", "Please enter the correct value for Hoehe:" + e.getMessage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Upgrade error", "Schaden failed to upgrade: " + e.getMessage());
+                }
+            }
+        });
     }
 
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+
+
     public void deleteSchaden() {
-        try {
-            SchadenCRUD handler = new SchadenCRUD();
-            handler.deleteSchaden(schaden);
-            showSchaden();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (schaden == null) {
+            showAlert("Error", "Schaden object not selected.");
+            return;
         }
+
+
+        String beschreibung = schaden.getBeschreibung();
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure, you want to remove Schaden with the description: " + beschreibung + "?",
+                ButtonType.YES, ButtonType.NO);
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    SchadenCRUD handler = new SchadenCRUD();
+                    handler.deleteSchaden(schaden);
+                    showSchaden();
+                    clearFields();
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Delete error", "Failed to uninstall Schaden: " + e.getMessage());
+                }
+            }
+        });
     }
 
     @FXML

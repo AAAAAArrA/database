@@ -12,28 +12,21 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-//        stage.setTitle("Hello!");
-//        stage.setScene(scene);
-//        stage.show();
-
         try {
-            // Загрузка FXML файла
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("schaden.fxml"));
             Parent root = loader.load();
 
-            // Установка сцены
+
             Scene scene = new Scene(root);
 
-            // Конфигурация и показ основного окна
             stage.setTitle("База данных 'Unwetter'");
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
-//    }
+
 
 }
 
