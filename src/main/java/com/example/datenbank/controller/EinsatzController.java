@@ -36,6 +36,7 @@ public class EinsatzController implements Initializable {
     @FXML
     public TableView<Einsatz> tableView;
 
+    @FXML
     public TableColumn<Einsatz, Integer> collId;
 
     @FXML
@@ -68,8 +69,6 @@ public class EinsatzController implements Initializable {
         beginn.setCellValueFactory(new PropertyValueFactory<Einsatz, Date>("beginn"));
         ende.setCellValueFactory(new PropertyValueFactory<Einsatz, Date>("end"));
         tableView.setItems(list);
-
-
     }
 
     @FXML
