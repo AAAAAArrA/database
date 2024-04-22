@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
 
         try {
             // Загрузка FXML файла
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("einsatz.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("schaden.fxml"));
             Parent root = loader.load();
 
             // Установка сцены

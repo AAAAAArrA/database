@@ -14,7 +14,10 @@ public class Schaden {
         this.beschreibung = beschreibung;
     }
 
-
+    public Schaden(BigDecimal hoehe, String beschreibung) {
+        this.hoehe = hoehe;
+        this.beschreibung = beschreibung;
+    }
 
     public int getSchadenID() {
         return schadenID;
