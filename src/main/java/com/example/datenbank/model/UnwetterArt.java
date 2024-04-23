@@ -9,6 +9,10 @@ public class UnwetterArt {
         this.bezeichnung = bezeichnung;
     }
 
+    public UnwetterArt(){
+
+    }
+
     public UnwetterArt(String bezeichnung) {
         this.bezeichnung = bezeichnung;
     }

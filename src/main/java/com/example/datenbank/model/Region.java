@@ -8,6 +8,9 @@ public class Region {
         this.id = id;
         this.name = name;
     }
+    public Region(){
+
+    }
 
     public Region(String name) {
         this.name = name;

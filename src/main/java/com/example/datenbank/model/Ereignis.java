@@ -1,34 +1,36 @@
 package com.example.datenbank.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.sql.Date;
 
 public class Ereignis {
+
     private int id;
 
-    private String unwetter;
+    private UnwetterArt unwetter;
 
-    private String regionName;
+    private Region regionName;
 
-    private int schaden;
-    private String beschreibung;
+    private Schaden schaden;
 
     private Date datum;
 
-    public Ereignis(int id, String unwetter, String regionName, int schaden, String beschreibung, Date datum) {
+    public Ereignis(int id, UnwetterArt unwetter, Region regionName, Schaden schaden, Date datum) {
         this.id = id;
         this.unwetter = unwetter;
         this.regionName = regionName;
         this.schaden = schaden;
-        this.beschreibung = beschreibung;
         this.datum = datum;
     }
 
-    public Ereignis(String unwetter, String regionName, int schaden, String beschreibung, Date datum) {
+    public Ereignis(UnwetterArt unwetter, Region regionName, Schaden schaden, Date datum) {
         this.unwetter = unwetter;
         this.regionName = regionName;
         this.schaden = schaden;
-        this.beschreibung = beschreibung;
         this.datum = datum;
+    }
+    public Ereignis(){
+
     }
 
     public int getId() {
@@ -39,36 +41,28 @@ public class Ereignis {
         this.id = id;
     }
 
-    public String getUnwetter() {
+    public UnwetterArt getUnwetter() {
         return unwetter;
     }
 
-    public void setUnwetter(String unwetter) {
+    public void setUnwetter(UnwetterArt unwetter) {
         this.unwetter = unwetter;
     }
 
-    public String getRegion() {
+    public Region getRegionName() {
         return regionName;
     }
 
-    public void setRegion(String regionName) {
+    public void setRegionName(Region regionName) {
         this.regionName = regionName;
     }
 
-    public int getSchaden() {
+    public Schaden getSchaden() {
         return schaden;
     }
 
-    public void setSchaden(int schaden) {
+    public void setSchaden(Schaden schaden) {
         this.schaden = schaden;
-    }
-
-    public String getBeschreibung() {
-        return beschreibung;
-    }
-
-    public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
     }
 
     public Date getDatum() {

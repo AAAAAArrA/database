@@ -10,7 +10,7 @@ module com.example.datenbank {
     exports com.example.datenbank.controller;
     opens com.example.datenbank.controller to javafx.fxml;
     exports com.example.datenbank.model;
-    opens com.example.datenbank.model to javafx.fxml;
+    opens com.example.datenbank.model to javafx.fxml, javafx.base;
     exports com.example.datenbank.service;
     opens com.example.datenbank.service to javafx.fxml;
 }
