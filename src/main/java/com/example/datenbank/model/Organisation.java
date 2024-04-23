@@ -13,6 +13,10 @@ public class Organisation {
         this.name = name;
     }
 
+    public Organisation(){
+
+    }
+
     public int getId() {
         return id;
     }

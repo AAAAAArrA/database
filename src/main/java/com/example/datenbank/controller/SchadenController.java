@@ -56,7 +56,9 @@ public class SchadenController implements Initializable {
 
     @FXML
     private void addSchaden() {
-        BigDecimal hoehe = new BigDecimal(tfHoehe.getText());
+//        BigDecimal hoehe = new BigDecimal(tfHoehe.getText());
+        String h = tfHoehe.getText();
+        Integer hoehe = Integer.parseInt(h);
         String beschreibung = tfBeschreibung.getText();
         Schaden schaden = new Schaden(hoehe, beschreibung);
         SchadenCRUD handler = new SchadenCRUD();
@@ -82,7 +84,8 @@ public class SchadenController implements Initializable {
     public void updateSchaden() {
         try {
             // Convert the text field input for hoehe from String to BigDecimal
-            BigDecimal hoehe = new BigDecimal(tfHoehe.getText());
+//            BigDecimal hoehe = new BigDecimal(tfHoehe.getText());
+            Integer hoehe = Integer.parseInt(tfHoehe.getText());
             String beschreibung = tfBeschreibung.getText();
             int schadenID = schaden.getSchadenID();  // Assuming selectedSchaden is an already selected instance of Schaden
 

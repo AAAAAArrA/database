@@ -3,6 +3,9 @@ package com.example.datenbank.controller;
 
 import com.example.datenbank.model.*;
 import com.example.datenbank.service.EreignisCRUD;
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -73,10 +77,28 @@ public class EreignisController implements Initializable {
         EreignisCRUD handler = new EreignisCRUD();
         ObservableList<Ereignis> list = handler.getEreignisList();
         collId.setCellValueFactory(new PropertyValueFactory<Ereignis, Integer>("id"));
-        unwetter.setCellValueFactory(new PropertyValueFactory<Ereignis, String>("unwetter"));
-        region.setCellValueFactory(new PropertyValueFactory<Ereignis, String>("regionName"));
-        hoehe.setCellValueFactory(new PropertyValueFactory<Ereignis, Integer>("schaden"));
-        beschreibung.setCellValueFactory(new PropertyValueFactory<Ereignis, String>("beschreibung"));
+        unwetter.setCellValueFactory(cellData -> {
+            Ereignis ereignis = cellData.getValue();
+            UnwetterArt unwetter = ereignis.getUnwetter();
+            return new ReadOnlyStringWrapper(unwetter != null ? unwetter.getBezeichnung() : "");
+        });
+        region.setCellValueFactory(cellData -> {
+            Ereignis ereignis = cellData.getValue();
+            Region region = ereignis.getRegionName();
+            return new ReadOnlyStringWrapper(region != null ? region.getName() : "");
+        });
+        hoehe.setCellValueFactory(cellData -> {
+            Ereignis ereignis = cellData.getValue();
+            Schaden schaden = ereignis.getSchaden();
+            Integer hoeheValue = schaden != null ? schaden.getHoehe() : null;
+            return new ReadOnlyObjectWrapper<>(hoeheValue);
+        });
+        beschreibung.setCellValueFactory(cellData -> {
+            Ereignis ereignis = cellData.getValue();
+            Schaden schaden = ereignis.getSchaden();
+
+            return new ReadOnlyStringWrapper(schaden != null ? schaden.getBeschreibung() : "");
+        });
         datum.setCellValueFactory(new PropertyValueFactory<Ereignis, Date>("datum"));
         tableView.setItems(list);
     }

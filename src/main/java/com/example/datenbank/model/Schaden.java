@@ -3,20 +3,24 @@ package com.example.datenbank.model;
 import java.math.BigDecimal;
 
 public class Schaden {
-    private int schadenID;
-    private BigDecimal hoehe;
+    private Integer schadenID;
+    private Integer hoehe;
     private String beschreibung;
 
 
-    public Schaden(int schadenID, BigDecimal hoehe, String beschreibung) {
+    public Schaden(int schadenID, Integer hoehe, String beschreibung) {
         this.schadenID = schadenID;
         this.hoehe = hoehe;
         this.beschreibung = beschreibung;
     }
 
-    public Schaden(BigDecimal hoehe, String beschreibung) {
+    public Schaden(Integer hoehe, String beschreibung) {
         this.hoehe = hoehe;
         this.beschreibung = beschreibung;
+    }
+
+    public Schaden(){
+
     }
 
     public int getSchadenID() {
@@ -27,11 +31,11 @@ public class Schaden {
         this.schadenID = schadenID;
     }
 
-    public BigDecimal getHoehe() {
+    public Integer getHoehe() {
         return hoehe;
     }
 
-    public void setHoehe(BigDecimal hoehe) {
+    public void setHoehe(Integer hoehe) {
         this.hoehe = hoehe;
     }
 

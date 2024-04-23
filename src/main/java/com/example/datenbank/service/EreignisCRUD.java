@@ -2,11 +2,12 @@ package com.example.datenbank.service;
 
 import com.example.datenbank.DBConnection;
 import com.example.datenbank.controller.EreignisController;
-import com.example.datenbank.model.Einsatz;
-import com.example.datenbank.model.Ereignis;
+import com.example.datenbank.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,31 +18,57 @@ public class EreignisCRUD {
 
     public ObservableList<Ereignis> getEreignisList(){
         ObservableList<Ereignis> list = FXCollections.observableArrayList();
-        String query = "SELECT Ereignis.Ereignis_ID, Ereignis.Datum, Region.Name as Region, Unwetterart.Bezeichnung as Unwetter, Schaden.Hoehe as SchadenHoehe, Schaden.Beschreibung as SchadenBeschreibung \n" +
-                "FROM Ereignis\n" +
-                "JOIN Region  ON Ereignis.Region_ID = Region.Region_ID\n" +
-                "JOIN UnwetterArt  ON Ereignis.UnwetterArt_ID = UnwetterArt.UnwetterArt_ID\n" +
-                "JOIN Schaden  ON Ereignis.Schaden_ID = Schaden.Schaden_ID";
+        String query = "SELECT e.Ereignis_ID, e.Datum, ua.Bezeichnung AS Unwetterart, r.Name AS Region, s.Hoehe, s.Beschreibung " +
+                "FROM ereignis e " +
+                "JOIN unwetterart ua ON e.Unwetterart_ID = ua.Unwetterart_ID " +
+                "JOIN region r ON e.Region_ID = r.Region_ID " +
+                "JOIN schaden s ON e.Schaden_ID = s.Schaden_ID";
         try{
             conn.getDBConnection();
             PreparedStatement statement = conn.getCon().prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             Ereignis ereignis;
             while (rs.next()){
-                ereignis = new Ereignis(
-                        rs.getInt("Ereignis_ID"),
-                        rs.getString("Unwetter"),
-                        rs.getString("Region"),
-                        rs.getInt("SchadenHoehe"),
-                        rs.getString("SchadenBeschreibung"),
-                        rs.getDate("Datum")
-                );
+                ereignis = new Ereignis();
+                ereignis.setId(rs.getInt("Ereignis_ID"));
+                ereignis.setDatum(rs.getDate("Datum"));
+
+                UnwetterArt unwetterArt = new UnwetterArt();
+                unwetterArt.setBezeichnung(rs.getString("Unwetterart"));
+                ereignis.setUnwetter(unwetterArt);
+
+                Region region = new Region();
+                region.setName(rs.getString("Region"));
+                ereignis.setRegionName(region);
+
+                Schaden schaden = new Schaden();
+                schaden.setHoehe(rs.getInt("Hoehe"));
+                schaden.setBeschreibung(rs.getString("Beschreibung"));
+                ereignis.setSchaden(schaden);
                 list.add(ereignis);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        for(Ereignis ereignis : list){
+            System.out.println(ereignis.getDatum() + ereignis.getRegionName().getName() + ereignis.getSchaden().getBeschreibung());
+        }
         return list;
+    }
+
+    public void addEreignis(Ereignis ereignis){
+        String sql = "INSERT INTO ereignis (Datum, Unwetterart_ID, Region_ID, Schaden_ID) VALUES (?, ?, ?, ?)";
+        try{
+            conn.getDBConnection();
+            PreparedStatement pstmt = conn.getCon().prepareStatement(sql);
+            pstmt.setDate(1, Date.valueOf(ereignis.getDatum().toLocalDate()));
+            pstmt.setInt(2, ereignis.getUnwetter().getId());
+            pstmt.setInt(3, ereignis.getRegionName().getId());
+            pstmt.setInt(4, ereignis.getSchaden().getSchadenID());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
