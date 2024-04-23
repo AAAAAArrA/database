@@ -53,7 +53,7 @@ public class SchadenController implements Initializable {
 
     @FXML
     private void addSchaden() {
-        BigDecimal hoehe = new BigDecimal(tfHoehe.getText());
+        Integer hoehe = Integer.parseInt(tfHoehe.getText());
         String beschreibung = tfBeschreibung.getText();
         Schaden schaden = new Schaden(hoehe, beschreibung);
         SchadenCRUD handler = new SchadenCRUD();
@@ -91,7 +91,7 @@ public class SchadenController implements Initializable {
         confirmationAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 try {
-                    BigDecimal hoehe = new BigDecimal(tfHoehe.getText());
+                    Integer hoehe = Integer.parseInt(tfHoehe.getText());
                     String beschreibungg = tfBeschreibung.getText();
                     int schadenID = schaden.getSchadenID();
 
