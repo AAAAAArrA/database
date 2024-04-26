@@ -5,7 +5,6 @@ import com.example.datenbank.model.Schaden;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -77,5 +76,30 @@ public class SchadenCRUD {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Schaden getSchaden(String description, int quantity){
+        String query = "SELECT Schaden_ID, Beschreibung, Hoehe \n" +
+                "FROM Schaden\n" +
+                "WHERE Hoehe = ? AND CAST(Beschreibung AS NVARCHAR(MAX)) = ?";
+        Schaden schaden = new Schaden();
+        try {
+            connection.getDBConnection();
+            PreparedStatement stmt = connection.getCon().prepareStatement(query);
+            stmt.setInt(1, quantity);
+            stmt.setString(2, description);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                schaden.setSchadenID(rs.getInt("Schaden_ID"));
+                schaden.setHoehe(rs.getInt("Hoehe"));
+                schaden.setBeschreibung(rs.getString("Beschreibung"));
+            }
+
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return schaden;
     }
 }

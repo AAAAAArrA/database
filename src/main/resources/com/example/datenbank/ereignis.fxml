@@ -27,7 +27,7 @@
             </rowConstraints>
             <children>
                 <ComboBox fx:id="unwetterComboBox" prefWidth="150.0" GridPane.rowIndex="1" />
-                <DatePicker />
+                <DatePicker fx:id="datePicker" />
             <ComboBox fx:id="regionComboBox" prefWidth="150.0" GridPane.rowIndex="2" />
             <ComboBox fx:id="schadenComboBox" prefWidth="150.0" GridPane.rowIndex="3" />
             </children>

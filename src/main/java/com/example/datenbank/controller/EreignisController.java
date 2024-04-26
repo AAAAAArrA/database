@@ -3,24 +3,30 @@ package com.example.datenbank.controller;
 
 import com.example.datenbank.model.*;
 import com.example.datenbank.service.EreignisCRUD;
+import com.example.datenbank.service.RegionCRUD;
+import com.example.datenbank.service.SchadenCRUD;
+import com.example.datenbank.service.UnwetterArtCRUD;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EreignisController implements Initializable {
+
+    @FXML
+    public DatePicker datePicker;
 
     @FXML
     public ComboBox<UnwetterArt> unwetterComboBox;
@@ -63,14 +69,66 @@ public class EreignisController implements Initializable {
     @FXML
     public TableColumn<Ereignis, String> beschreibung;
 
+    private Ereignis ereignis;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        UnwetterArtCRUD unwetterArtCRUD = new UnwetterArtCRUD();
+        List<UnwetterArt> unwetterArts = unwetterArtCRUD.getUnwetterArtList();
+
+        RegionCRUD regionCRUD = new RegionCRUD();
+        List<Region> regions = regionCRUD.getRegionList();
+
+        SchadenCRUD schadenCRUD = new SchadenCRUD();
+        List<Schaden> schadens = schadenCRUD.getSchadenList();
+
+        unwetterComboBox.setItems(FXCollections.observableList(unwetterArts));
+        regionComboBox.setItems(FXCollections.observableList(regions));
+        schadenComboBox.setItems(FXCollections.observableList(schadens));
+
+        unwetterComboBox.setCellFactory(comboBox -> new ListCell<UnwetterArt>(){
+            @Override
+            protected void updateItem(UnwetterArt item, boolean empty){
+                super.updateItem(item, empty);
+                setText(empty ? " " : item.getBezeichnung());
+            }
+        });
+
+        regionComboBox.setCellFactory(comboBox -> new ListCell<Region>(){
+            @Override
+            protected void updateItem(Region item, boolean empty){
+                super.updateItem(item, empty);
+                setText(empty ? " " : item.getName());
+            }
+        });
+
+        schadenComboBox.setCellFactory(comboBox -> new ListCell<Schaden>(){
+            @Override
+            protected void updateItem(Schaden item, boolean empty){
+                super.updateItem(item, empty);
+                setText(empty ? " " : item.getBeschreibung());
+            }
+        });
+
         showEreignis();
     }
 
     @FXML
     private void addEreignis(){
+        UnwetterArt selectedUnwetterArt = unwetterComboBox.getSelectionModel().getSelectedItem();
+        Region selectedRegion = regionComboBox.getSelectionModel().getSelectedItem();
+        Schaden selectedSchaden = schadenComboBox.getSelectionModel().getSelectedItem();
+        LocalDate selectedDate = datePicker.getValue();
+
+        Ereignis ereignis = new Ereignis();
+        ereignis.setDatum(Date.valueOf(selectedDate));
+        ereignis.setUnwetter(selectedUnwetterArt);
+        ereignis.setRegionName(selectedRegion);
+        ereignis.setSchaden(selectedSchaden);
+        EreignisCRUD ereignisCRUD = new EreignisCRUD();
+        ereignisCRUD.addEreignis(ereignis);
+        showEreignis();
 
     }
     private void showEreignis(){
@@ -105,22 +163,87 @@ public class EreignisController implements Initializable {
 
     @FXML
     public void mouseClicked(javafx.scene.input.MouseEvent mouseEvent){
+        try{
+            Ereignis ereignis = tableView.getSelectionModel().getSelectedItem();
+
+            UnwetterArtCRUD unwetterArtCRUD = new UnwetterArtCRUD();
+            UnwetterArt unwetterArt = unwetterArtCRUD.getUnwetter(ereignis.getUnwetter().getBezeichnung());
+
+            RegionCRUD regionCRUD = new RegionCRUD();
+            Region region = regionCRUD.getRegion(ereignis.getRegionName().getName());
+
+            SchadenCRUD schadenCRUD = new SchadenCRUD();
+            Schaden schaden = schadenCRUD.getSchaden(ereignis.getSchaden().getBeschreibung(), ereignis.getSchaden().getHoehe());
+
+
+            ereignis = new Ereignis(ereignis.getId(), unwetterArt, region,
+                    schaden, ereignis.getDatum());
+            this.ereignis = ereignis;
+            System.out.println(this.ereignis.getSchaden()+ " Schaden");
+            datePicker.setValue(ereignis.getDatum().toLocalDate());
+            unwetterComboBox.setValue(ereignis.getUnwetter());
+            regionComboBox.setValue(ereignis.getRegionName());
+            schadenComboBox.setValue(ereignis.getSchaden());
+            btnUpdate.setDisable(false);
+            btnDelete.setDisable(false);
+            btnSave.setDisable(true);
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
     @FXML
     public void updateEreignis(){
+        try{
+            EreignisCRUD ereignisCRUD = new EreignisCRUD();
 
+//            UnwetterArtCRUD unwetterArtCRUD = new UnwetterArtCRUD();
+//            UnwetterArt unwetterArt = unwetterArtCRUD.getUnwetter(this.ereignis.getUnwetter().getBezeichnung());
+//
+//            SchadenCRUD schadenCRUD = new SchadenCRUD();
+//            Schaden schaden = schadenCRUD.getSchaden(this.ereignis.getSchaden().getBeschreibung(), this.ereignis.getSchaden().getHoehe());
+//
+//            RegionCRUD regionCRUD = new RegionCRUD();
+//            Region region = regionCRUD.getRegion(this.ereignis.getRegionName().getName());
+
+            LocalDate selectedDate = datePicker.getValue();
+            Ereignis ereignis1 = new Ereignis(this.ereignis.getId(), unwetterComboBox.getValue(),
+                    regionComboBox.getValue(), schadenComboBox.getValue(), Date.valueOf(selectedDate));
+            ereignisCRUD.updateEreignis(ereignis1);
+            showEreignis();
+            clearFields();
+            btnUpdate.setDisable(true);
+            btnDelete.setDisable(true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void deleteEreignis(){
+        try{
+            EreignisCRUD handler = new EreignisCRUD();
+            Ereignis ereignis = new Ereignis(this.ereignis.getId(), this.ereignis.getUnwetter(), this.ereignis.getRegionName(),
+                    this.ereignis.getSchaden(), this.ereignis.getDatum());
+            handler.delete(ereignis);
+            System.out.println(ereignis.getSchaden().getSchadenID());
+            showEreignis();
+            clearFields();
+            btnUpdate.setDisable(true);
+            btnDelete.setDisable(true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
     @FXML
     private  void clearFields(){
-
+        datePicker.setValue(null);
+        unwetterComboBox.setValue(null);
+        regionComboBox.setValue(null);
+        schadenComboBox.setValue(null);
     }
 
     @FXML

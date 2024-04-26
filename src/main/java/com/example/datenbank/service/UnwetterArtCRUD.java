@@ -81,5 +81,25 @@ public class UnwetterArtCRUD {
         }
     }
 
+    public UnwetterArt getUnwetter(String name){
+        String query = "SELECT Unwetterart_ID, Bezeichnung \n" +
+                "FROM Unwetterart\n" +
+                "WHERE CAST(Bezeichnung AS NVARCHAR(MAX)) = ?";
+        UnwetterArt unwetterArt = new UnwetterArt();
+        try{
+            conn.getDBConnection();
+            PreparedStatement stmt = conn.getCon().prepareStatement(query);
+            stmt.setString(1, name);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                unwetterArt.setId(rs.getInt("Unwetterart_ID"));
+                unwetterArt.setBezeichnung(rs.getString("Bezeichnung"));
+
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return unwetterArt;
+    }
 }
 

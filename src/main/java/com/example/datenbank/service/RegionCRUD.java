@@ -69,6 +69,25 @@ public class RegionCRUD {
                 e.printStackTrace();
             }
         }
+
+        public Region getRegion(String name){
+            String query = "SELECT Region_ID, Name FROM Region " +
+                    "WHERE CAST(Name AS NVARCHAR(MAX)) = ?";
+            Region region = new Region();
+            try{
+                connection.getDBConnection();
+                PreparedStatement stmt = connection.getCon().prepareStatement(query);
+                stmt.setString(1, name);
+                ResultSet rs = stmt.executeQuery();
+                if(rs.next()){
+                    region.setId(rs.getInt("Region_ID"));
+                    region.setName(rs.getString("Name"));
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            return  region;
+        }
     }
 
 

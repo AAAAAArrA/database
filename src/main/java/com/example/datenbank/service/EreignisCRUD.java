@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 
 
 import java.sql.Date;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,6 +69,43 @@ public class EreignisCRUD {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void delete(Ereignis ereignis){
+        try{
+            conn.getDBConnection();
+            PreparedStatement stmt = conn.getCon().prepareStatement("DELETE FROM [Ereignis] WHERE [Ereignis_ID] = ?");
+
+            stmt.setInt(1, ereignis.getId());
+            stmt.execute();
+            stmt.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateEreignis(Ereignis ereignis){
+        try{
+            String query = "UPDATE Ereignis\n" +
+                    "   SET Datum = ?\n" +
+                    "      ,Unwetterart_ID = ?\n" +
+                    "      ,Region_ID = ?\n" +
+                    "      ,Schaden_ID = ?\n" +
+                    " WHERE Ereignis_ID = ?";
+            conn.getDBConnection();
+            PreparedStatement statement = conn.getCon().prepareStatement(query);
+            statement.setDate(1,ereignis.getDatum());
+            statement.setInt(2, ereignis.getUnwetter().getId());
+            statement.setInt(3, ereignis.getRegionName().getId());
+            statement.setInt(4, ereignis.getSchaden().getSchadenID());
+            statement.setInt(5, ereignis.getId());
+            statement.execute();
+            System.out.println(ereignis.getRegionName().getName());
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
