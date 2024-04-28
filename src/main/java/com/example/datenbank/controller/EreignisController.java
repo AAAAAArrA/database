@@ -6,7 +6,6 @@ import com.example.datenbank.service.EreignisCRUD;
 import com.example.datenbank.service.RegionCRUD;
 import com.example.datenbank.service.SchadenCRUD;
 import com.example.datenbank.service.UnwetterArtCRUD;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -16,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -179,7 +177,6 @@ public class EreignisController implements Initializable {
             ereignis = new Ereignis(ereignis.getId(), unwetterArt, region,
                     schaden, ereignis.getDatum());
             this.ereignis = ereignis;
-            System.out.println(this.ereignis.getSchaden()+ " Schaden");
             datePicker.setValue(ereignis.getDatum().toLocalDate());
             unwetterComboBox.setValue(ereignis.getUnwetter());
             regionComboBox.setValue(ereignis.getRegionName());
@@ -197,15 +194,6 @@ public class EreignisController implements Initializable {
     public void updateEreignis(){
         try{
             EreignisCRUD ereignisCRUD = new EreignisCRUD();
-
-//            UnwetterArtCRUD unwetterArtCRUD = new UnwetterArtCRUD();
-//            UnwetterArt unwetterArt = unwetterArtCRUD.getUnwetter(this.ereignis.getUnwetter().getBezeichnung());
-//
-//            SchadenCRUD schadenCRUD = new SchadenCRUD();
-//            Schaden schaden = schadenCRUD.getSchaden(this.ereignis.getSchaden().getBeschreibung(), this.ereignis.getSchaden().getHoehe());
-//
-//            RegionCRUD regionCRUD = new RegionCRUD();
-//            Region region = regionCRUD.getRegion(this.ereignis.getRegionName().getName());
 
             LocalDate selectedDate = datePicker.getValue();
             Ereignis ereignis1 = new Ereignis(this.ereignis.getId(), unwetterComboBox.getValue(),
@@ -227,7 +215,6 @@ public class EreignisController implements Initializable {
             Ereignis ereignis = new Ereignis(this.ereignis.getId(), this.ereignis.getUnwetter(), this.ereignis.getRegionName(),
                     this.ereignis.getSchaden(), this.ereignis.getDatum());
             handler.delete(ereignis);
-            System.out.println(ereignis.getSchaden().getSchadenID());
             showEreignis();
             clearFields();
             btnUpdate.setDisable(true);

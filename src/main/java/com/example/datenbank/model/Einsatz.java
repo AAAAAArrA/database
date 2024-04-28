@@ -5,43 +5,31 @@ import java.sql.Date;
 public class Einsatz {
     private int id;
 
-    private int organisationId;
+    private Ereignis ereignis;
 
-    private String organisationName;
+    private Organisation organisation;
 
     private Date beginn;
 
     private Date end;
 
-    public Einsatz(int id, int organisationId, String organisationName, Date beginn, Date end) {
+    public Einsatz(int id, Ereignis ereignis, Organisation organisation, Date beginn, Date end) {
         this.id = id;
-        this.organisationId = organisationId;
-        this.organisationName = organisationName;
+        this.ereignis = ereignis;
+        this.organisation = organisation;
         this.beginn = beginn;
         this.end = end;
     }
 
-    public Einsatz(int organisationId, String organisationName, Date beginn, Date end) {
-        this.organisationId = organisationId;
-        this.organisationName = organisationName;
+    public Einsatz(Ereignis ereignis, Organisation organisation, Date beginn, Date end) {
+        this.ereignis = ereignis;
+        this.organisation = organisation;
         this.beginn = beginn;
         this.end = end;
     }
 
-    public int getOrganisationId() {
-        return organisationId;
-    }
+    public Einsatz (){
 
-    public void setOrganisationId(int organisationId) {
-        this.organisationId = organisationId;
-    }
-
-    public String getOrganisationName() {
-        return organisationName;
-    }
-
-    public void setOrganisationName(String organisationName) {
-        this.organisationName = organisationName;
     }
 
     public int getId() {
@@ -52,7 +40,21 @@ public class Einsatz {
         this.id = id;
     }
 
+    public Ereignis getEreignis() {
+        return ereignis;
+    }
 
+    public void setEreignis(Ereignis ereignis) {
+        this.ereignis = ereignis;
+    }
+
+    public Organisation getOrganisation() {
+        return organisation;
+    }
+
+    public void setOrganisation(Organisation organisation) {
+        this.organisation = organisation;
+    }
 
     public Date getBeginn() {
         return beginn;

@@ -37,10 +37,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GridPane>
-            <ComboBox prefWidth="150.0" />
-            <ComboBox prefWidth="150.0" GridPane.rowIndex="1" />
-            <DatePicker GridPane.rowIndex="2" />
-            <DatePicker GridPane.rowIndex="3" />
+            <ComboBox fx:id="ereignisComboBox" prefWidth="150.0" />
+            <ComboBox fx:id="organisationComboBox" prefWidth="150.0" GridPane.rowIndex="1" />
+            <DatePicker fx:id="beginnDate" GridPane.rowIndex="2" />
+            <DatePicker fx:id="endDate" GridPane.rowIndex="3" />
             </children>
         </GridPane>
         <Button fx:id="btnNew" layoutX="54.0" layoutY="214.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="84.0" text="NEW">
@@ -66,9 +66,9 @@
         <TableView fx:id="tableView" layoutX="24.0" layoutY="266.0" onMouseClicked="#mouseClicked" prefHeight="199.0" prefWidth="549.0">
             <columns>
                 <TableColumn fx:id="collId" prefWidth="37.5999755859375" text="ID" />
-                <TableColumn prefWidth="100.0" text="Er.Unwetter" />
-            <TableColumn prefWidth="100.0" text="Er.Region" />
-            <TableColumn prefWidth="100.0" text="Er.Schaden" />
+                <TableColumn fx:id="unwetter" prefWidth="100.0" text="Er.Unwetter" />
+            <TableColumn fx:id="region" prefWidth="100.0" text="Er.Region" />
+            <TableColumn fx:id="schaden" prefWidth="100.0" text="Er.Schaden" />
             <TableColumn fx:id="organisationName" prefWidth="100.0" text="Organisation" />
             <TableColumn fx:id="beginn" prefWidth="100.0" text="Beginn" />
             <TableColumn fx:id="ende" prefWidth="100.0" text="Ende" />

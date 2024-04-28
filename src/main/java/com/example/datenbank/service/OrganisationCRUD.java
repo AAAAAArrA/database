@@ -81,5 +81,24 @@ public class OrganisationCRUD {
         }
     }
 
+    public Organisation getOrganisationById(int id){
+        String query = "SELECT Organisation_ID, Name FROM Organisation WHERE Organisation_ID = ?";
+
+        Organisation organisation = new Organisation();
+        try{
+            conn.getDBConnection();
+            PreparedStatement stmt = conn.getCon().prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                organisation.setId(rs.getInt("Organisation_ID"));
+                organisation.setName(rs.getString("Name"));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return organisation;
+    }
+
 }
 

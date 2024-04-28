@@ -2,6 +2,7 @@ package com.example.datenbank.service;
 
 import com.example.datenbank.DBConnection;
 import com.example.datenbank.controller.EreignisController;
+import com.example.datenbank.controller.RegionController;
 import com.example.datenbank.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,9 +52,7 @@ public class EreignisCRUD {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        for(Ereignis ereignis : list){
-            System.out.println(ereignis.getDatum() + ereignis.getRegionName().getName() + ereignis.getSchaden().getBeschreibung());
-        }
+
         return list;
     }
 
@@ -102,11 +101,46 @@ public class EreignisCRUD {
             statement.setInt(4, ereignis.getSchaden().getSchadenID());
             statement.setInt(5, ereignis.getId());
             statement.execute();
-            System.out.println(ereignis.getRegionName().getName());
             statement.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Ereignis getEreignisByID(int id){
+        String query = "SELECT e.Ereignis_ID, e.Datum, ua.Bezeichnung AS Unwetterart, r.Name AS Region, s.Hoehe, s.Beschreibung " +
+                "FROM ereignis e " +
+                "JOIN unwetterart ua ON e.Unwetterart_ID = ua.Unwetterart_ID " +
+                "JOIN region r ON e.Region_ID = r.Region_ID " +
+                "JOIN schaden s ON e.Schaden_ID = s.Schaden_ID " +
+                "Where Ereignis_ID = ?";
+        Ereignis ereignis = new Ereignis();
+        try{
+            conn.getDBConnection();
+            PreparedStatement statement = conn.getCon().prepareStatement(query);
+            statement.setInt(1,id);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                UnwetterArtCRUD unwetterArtCRUD = new UnwetterArtCRUD();
+                UnwetterArt unwetterArt = unwetterArtCRUD.getUnwetter(rs.getString("Unwetterart"));
+
+                RegionCRUD regionCRUD = new RegionCRUD();
+                Region region = regionCRUD.getRegion(rs.getString("Region"));
+
+                SchadenCRUD schadenCRUD = new SchadenCRUD();
+                Schaden schaden = schadenCRUD.getSchaden(rs.getString("Beschreibung"), rs.getInt("Hoehe"));
+
+                ereignis.setId(rs.getInt("Ereignis_ID"));
+                ereignis.setDatum(rs.getDate("Datum"));
+                ereignis.setUnwetter(unwetterArt);
+                ereignis.setRegionName(region);
+                ereignis.setSchaden(schaden);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ereignis;
     }
 
 }

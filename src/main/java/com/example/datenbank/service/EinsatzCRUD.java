@@ -1,7 +1,7 @@
 package com.example.datenbank.service;
 
 import com.example.datenbank.DBConnection;
-import com.example.datenbank.model.Einsatz;
+import com.example.datenbank.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,20 +14,65 @@ public class EinsatzCRUD {
 
     public ObservableList<Einsatz> getEinsatzList(){
         ObservableList<Einsatz> list = FXCollections.observableArrayList();
-        String query = "SELECT Einsatz.Einsatz_ID, Einsatz.Beginn, Einsatz.Ende, Organisation.Name AS orgName " +
-                "FROM Einsatz JOIN Organisation ON Einsatz.Organisation_ID = Organisation.Organisation_ID";
+        String query = "SELECT \n" +
+                "    e.Einsatz_ID,\n" +
+                "    e.Beginn,\n" +
+                "    e.Ende,\n" +
+                "    e.Organisation_ID,\n"+
+                "    org.Name AS Organisation_Name,"+
+                "    er.Ereignis_ID,\n" +
+                "    er.Datum AS Ereignis_Datum,\n" +
+                "    uw.Unwetterart_ID,\n" +
+                "    uw.Bezeichnung AS Unwetterart_Bezeichnung,\n" +
+                "    r.Region_ID,\n" +
+                "    r.Name AS Region_Name,\n" +
+                "    s.Schaden_ID,\n" +
+                "    s.Hoehe AS Schaden_Hoehe,\n" +
+                "    s.Beschreibung AS Schaden_Beschreibung\n" +
+                "FROM einsatz e\n" +
+                "JOIN ereignis er ON e.Ereignis_ID = er.Ereignis_ID\n" +
+                "JOIN unwetterart uw ON er.Unwetterart_ID = uw.Unwetterart_ID\n" +
+                "JOIN region r ON er.Region_ID = r.Region_ID\n" +
+                "JOIN schaden s ON er.Schaden_ID = s.Schaden_ID\n" +
+                "JOIN organisation org ON e.Organisation_ID = org.Organisation_ID";
         try{
             conn.getDBConnection();
             PreparedStatement statement = conn.getCon().prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             Einsatz einsatz;
             while (rs.next()){
-                einsatz = new Einsatz(
-                        rs.getInt("Einsatz_ID"),
-//                        rs.getInt("Organisation_ID"),
-                        rs.getString("orgName"),
-                        rs.getDate("Beginn"),
-                        rs.getDate("Ende") );
+                 einsatz = new Einsatz();
+                UnwetterArt unwetter = new UnwetterArt();
+                unwetter.setId(rs.getInt("Unwetterart_ID"));
+                unwetter.setBezeichnung(rs.getString("Unwetterart_Bezeichnung"));
+
+                Region region = new Region();
+                region.setId(rs.getInt("Region_ID"));
+                region.setName(rs.getString("Region_Name"));
+
+                Schaden schaden = new Schaden();
+                schaden.setSchadenID(rs.getInt("Schaden_ID"));
+                schaden.setHoehe(rs.getInt("Schaden_Hoehe"));
+                schaden.setBeschreibung(rs.getString("Schaden_Beschreibung"));
+
+
+                Ereignis ereignis = new Ereignis();
+                ereignis.setId(rs.getInt("Ereignis_ID"));
+                ereignis.setDatum(rs.getDate("Ereignis_Datum"));
+                ereignis.setUnwetter(unwetter);
+                ereignis.setRegionName(region);
+                ereignis.setSchaden(schaden);
+
+                Organisation organisation = new Organisation();
+                organisation.setId(rs.getInt("Organisation_ID"));
+                organisation.setName(rs.getString("Organisation_Name"));
+
+                einsatz.setId(rs.getInt("Einsatz_ID"));
+                einsatz.setBeginn(rs.getDate("Beginn"));
+                einsatz.setEnd(rs.getDate("Ende"));
+                einsatz.setEreignis(ereignis);
+                einsatz.setOrganisation(organisation);
+
                 list.add(einsatz);
             }
         } catch (SQLException e) {
@@ -36,5 +81,60 @@ public class EinsatzCRUD {
         return  list;
 
     }
+
+
+    public void  addEinsatz(Einsatz einsatz){
+        String query = "Insert into einsatz (Ereignis_ID, Organisation_ID, Beginn, Ende) VALUES (?,?, ?,?)";
+        try{
+            conn.getDBConnection();
+            PreparedStatement pstmt = conn.getCon().prepareStatement(query);
+            pstmt.setInt(1, einsatz.getEreignis().getId());
+            pstmt.setInt(2, einsatz.getOrganisation().getId());
+            pstmt.setDate(3, einsatz.getBeginn());
+            pstmt.setDate(4, einsatz.getEnd());
+            pstmt.executeUpdate();
+            pstmt.close();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void deleteEinsatz(Einsatz einsatz){
+        try{
+            conn.getDBConnection();
+            PreparedStatement stmt = conn.getCon().prepareStatement("DELETE FROM Einsatz WHERE Einsatz_ID = ?");
+            stmt.setInt(1, einsatz.getId());
+            stmt.execute();
+            stmt.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateEinsatz(Einsatz einsatz){
+        String query = "UPDATE Einsatz "
+                + "SET Beginn = ?, Ende = ?, Ereignis_ID = ?, Organisation_ID = ? "
+                + "WHERE Einsatz_ID = ?";
+        try{
+            conn.getDBConnection();
+            PreparedStatement statement = conn.getCon().prepareStatement(query);
+            statement.setDate(1, einsatz.getBeginn());
+            statement.setDate(2, einsatz.getEnd());
+            statement.setInt(3, einsatz.getEreignis().getId());
+            statement.setInt(4, einsatz.getOrganisation().getId());
+            statement.setInt(5, einsatz.getId());
+            statement.execute();
+            statement.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
 
 }
