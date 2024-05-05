@@ -6,10 +6,7 @@ import com.example.datenbank.service.UnwetterArtCRUD;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -84,36 +81,82 @@ public class UnwetterArtController implements Initializable {
         }
     }
 
-    public void updateUnwetterArt(){
-        try{
-            UnwetterArtCRUD handler = new UnwetterArtCRUD();
-            UnwetterArt unwetterArt = new UnwetterArt(this.unwetterArt.getId(), bezeichnung.getText());
-            handler.updateUnwetterArt(unwetterArt);
-            showUnwetterArt();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
+//    public void updateUnwetterArt(){
+//        try{
+//            UnwetterArtCRUD handler = new UnwetterArtCRUD();
+//            UnwetterArt unwetterArt = new UnwetterArt(this.unwetterArt.getId(), bezeichnung.getText());
+//            handler.updateUnwetterArt(unwetterArt);
+//            showUnwetterArt();
+//            clearFields();
+//            btnUpdate.setDisable(true);
+//            btnDelete.setDisable(true);
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public void updateUnwetterArt() {
+
+        String currentBezeichnung = bezeichnung.getText();
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure, you want to update UnwetterArt with name: " + currentBezeichnung + "?",
+                ButtonType.YES, ButtonType.NO);
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    UnwetterArtCRUD handler = new UnwetterArtCRUD();
+                    UnwetterArt unwetterArt = new UnwetterArt(this.unwetterArt.getId(), currentBezeichnung);
+                    handler.updateUnwetterArt(unwetterArt);
+                    showUnwetterArt(); // Обновление отображения данных.
+                    clearFields(); // Очистка полей формы.
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Upgrade error", "Failed to upgrade UnwetterArt: " + e.getMessage());
+                }
+            }
+        });
     }
 
-    public void deleteUnwetterArt(){
-        try{
-            UnwetterArtCRUD handler = new UnwetterArtCRUD();
-            UnwetterArt unwetterArt = new UnwetterArt(this.unwetterArt.getId(), this.unwetterArt.getBezeichnung());
-            handler.delete(unwetterArt);
-            showUnwetterArt();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
+
+
+public void deleteUnwetterArt() {
+
+    String currentBezeichnung = this.unwetterArt.getBezeichnung();
+
+
+    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+            "Are you sure you want to delete UnwetterArt with the designation: " + currentBezeichnung + "?",
+            ButtonType.YES, ButtonType.NO);
+
+
+    confirmationAlert.showAndWait().ifPresent(response -> {
+        if (response == ButtonType.YES) {
+            try {
+                UnwetterArtCRUD handler = new UnwetterArtCRUD();
+                UnwetterArt unwetterArt = new UnwetterArt(this.unwetterArt.getId(), currentBezeichnung);
+                handler.delete(unwetterArt);
+                showUnwetterArt();
+                clearFields();
+                btnUpdate.setDisable(true);
+                btnDelete.setDisable(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("Delete error", "Failed to delete UnwetterArt: " + e.getMessage());
+            }
+        }
+    });
+}
     private  void clearFields(){
         bezeichnung.setText("");
     }

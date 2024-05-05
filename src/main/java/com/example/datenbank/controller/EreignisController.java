@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -190,40 +191,75 @@ public class EreignisController implements Initializable {
 
     }
 
-    @FXML
-    public void updateEreignis(){
-        try{
-            EreignisCRUD ereignisCRUD = new EreignisCRUD();
 
-            LocalDate selectedDate = datePicker.getValue();
-            Ereignis ereignis1 = new Ereignis(this.ereignis.getId(), unwetterComboBox.getValue(),
-                    regionComboBox.getValue(), schadenComboBox.getValue(), Date.valueOf(selectedDate));
-            ereignisCRUD.updateEreignis(ereignis1);
-            showEreignis();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
     @FXML
-    public void deleteEreignis(){
-        try{
-            EreignisCRUD handler = new EreignisCRUD();
-            Ereignis ereignis = new Ereignis(this.ereignis.getId(), this.ereignis.getUnwetter(), this.ereignis.getRegionName(),
-                    this.ereignis.getSchaden(), this.ereignis.getDatum());
-            handler.delete(ereignis);
-            showEreignis();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public void updateEreignis() {
+        LocalDate selectedDate = datePicker.getValue();
+        String details = "Unwetter: " + unwetterComboBox.getValue() +
+                ", Region: " + regionComboBox.getValue() +
+                ", Schaden: " + schadenComboBox.getValue() +
+                ", Datum: " + selectedDate;
 
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to update this Ereignis with the following details?\n" + details,
+                ButtonType.YES, ButtonType.NO);
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    EreignisCRUD ereignisCRUD = new EreignisCRUD();
+                    Ereignis ereignis = new Ereignis(this.ereignis.getId(), unwetterComboBox.getValue(),
+                            regionComboBox.getValue(), schadenComboBox.getValue(), Date.valueOf(selectedDate));
+                    ereignisCRUD.updateEreignis(ereignis);
+                    showEreignis(); // Обновление отображения данных.
+                    clearFields(); // Очистка полей формы.
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Update error", "Failed to update Ereignis: " + e.getMessage());
+                }
+            }
+        });
     }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    @FXML
+    public void deleteEreignis() {
+        String details = "Unwetter: " + this.ereignis.getUnwetter() +
+                ", Region: " + this.ereignis.getRegionName() +
+                ", Schaden: " + this.ereignis.getSchaden() +
+                ", Datum: " + this.ereignis.getDatum();
+
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to delete this Ereignis with the following details?\n" + details,
+                ButtonType.YES, ButtonType.NO);
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    EreignisCRUD handler = new EreignisCRUD();
+                    Ereignis ereignis = new Ereignis(this.ereignis.getId(), this.ereignis.getUnwetter(), this.ereignis.getRegionName(),
+                            this.ereignis.getSchaden(), this.ereignis.getDatum());
+                    handler.delete(ereignis);
+                    showEreignis(); // Обновление отображения данных.
+                    clearFields(); // Очистка полей формы.
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Delete error", "Failed to delete Ereignis: " + e.getMessage());
+                }
+            }
+        });
+    }
+
 
     @FXML
     private  void clearFields(){

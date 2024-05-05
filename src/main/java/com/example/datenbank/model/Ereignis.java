@@ -69,7 +69,21 @@ public class Ereignis {
         return datum;
     }
 
+    @Override
+    public String toString() {
+        return "Ereignis{" +
+                "id=" + id +
+                ", unwetter=" + unwetter +
+                ", regionName=" + regionName +
+                ", schaden=" + schaden +
+                ", datum=" + datum +
+                '}';
+    }
+
     public void setDatum(Date datum) {
         this.datum = datum;
+
     }
+
+
 }

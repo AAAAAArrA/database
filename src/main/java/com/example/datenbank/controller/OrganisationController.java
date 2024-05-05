@@ -5,10 +5,7 @@ import com.example.datenbank.service.OrganisationCRUD;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -82,34 +79,67 @@ public class OrganisationController implements Initializable {
         }
     }
 
-    public void updateOrganisation(){
-        try{
-            OrganisationCRUD handler = new OrganisationCRUD();
-            Organisation organisation = new Organisation(this.organisation.getId(), name.getText());
-            handler.updateOrganisation(organisation);
-            showOrganisation();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
 
-        }catch (Exception e){
-            e.printStackTrace();
+public void updateOrganisation() {
+
+    String currentName = name.getText();
+
+
+    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+            "Are you sure you want to update the Organisation with the name: " + currentName + "?",
+            ButtonType.YES, ButtonType.NO);
+
+
+    confirmationAlert.showAndWait().ifPresent(response -> {
+        if (response == ButtonType.YES) {
+            try {
+                OrganisationCRUD handler = new OrganisationCRUD();
+                Organisation organisation = new Organisation(this.organisation.getId(), currentName);
+                handler.updateOrganisation(organisation);
+                showOrganisation();
+                clearFields();
+                btnUpdate.setDisable(true);
+                btnDelete.setDisable(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("Update error", "Failed to update Organisation: " + e.getMessage());
+            }
         }
+    });
+}
+    public void deleteOrganisation() {
+
+        String currentName = this.organisation.getName();
+
+
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to delete the Organisation with the name: " + currentName + "?",
+                ButtonType.YES, ButtonType.NO);
+
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    OrganisationCRUD handler = new OrganisationCRUD();
+                    Organisation organisation = new Organisation(this.organisation.getId(), currentName);
+                    handler.delete(organisation);
+                    showOrganisation();
+                    clearFields();
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Delete error", "Failed to delete Organisation: " + e.getMessage());
+                }
+            }
+        });
     }
 
-    public void deleteOrganisation(){
-        try{
-            OrganisationCRUD handler = new OrganisationCRUD();
-            Organisation organisation = new Organisation(this.organisation.getId(), this.organisation.getName());
-            handler.delete(organisation);
-            showOrganisation();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     private  void clearFields(){
