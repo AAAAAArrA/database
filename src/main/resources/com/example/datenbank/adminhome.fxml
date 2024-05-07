@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Scene?>
+<?import javafx.stage.Stage?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.AdminHomeController">
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Einsatz" fx:id="btnEinsatz" onAction="#handleEinsatz"/>
+        <Button text="Ereignis" fx:id="btnEreignis" onAction="#handleEreignis"/>
+        <Button text="Organisation" fx:id="btnOrganisation" onAction="#handleOrganisation"/>
+    </HBox>
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Region" fx:id="btnRegion" onAction="#handleRegion"/>
+        <Button text="Schaden" fx:id="btnSchaden" onAction="#handleSchaden"/>
+        <Button text="Unwetterart" fx:id="btnUnwetterart" onAction="#handleUnwetterart"/>
+    </HBox>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20" />
+    </padding>
+</VBox>

@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.Objects;
 
 public class LoginService {
     private DBConnection conn = new DBConnection();
@@ -56,22 +57,28 @@ public class LoginService {
     private void openRoleBasedInterface(String role) throws IOException {
         try {
             Stage stage = new Stage(); // Создание новой сцены
-            Parent root;
+
             switch (role) {
             case "Reader":
-                root = FXMLLoader.load(getClass().getResource("organisation.fxml")); // Загрузка FXML для админа
-                stage.setScene(new Scene(root));
-                stage.setTitle("Admin Interface");
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/readerhome.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                stage.setTitle("Reader Interface");
+                stage.setScene(scene);
                 break;
-            case "ReadWriter":
-                root = FXMLLoader.load(getClass().getResource("region.fxml")); // Загрузка FXML для админа
-                stage.setScene(new Scene(root));
-                stage.setTitle("Admin Interface");
+            case "Readwrite":
+                FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/com/example/datenbank/readwriterhome.fxml"));
+                Parent root2 = loader2.load();
+                Scene scene2 = new Scene(root2);
+                stage.setTitle("Read-writer Interface");
+                stage.setScene(scene2);
                 break;
             case "Admin":
-                root = FXMLLoader.load(getClass().getResource("einsatz.fxml")); // Загрузка FXML для админа
-                stage.setScene(new Scene(root));
+                FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/com/example/datenbank/adminhome.fxml"));
+                Parent root3 = loader3.load();
+                Scene scene3 = new Scene(root3);
                 stage.setTitle("Admin Interface");
+                stage.setScene(scene3);
                 break;
             default:
                 System.out.println("Unknown role");
