@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -178,42 +179,75 @@ public class EinsatzController implements Initializable {
         }
     }
 
-    @FXML
-    public void updateEinsatz(){
-        try{
-            EinsatzCRUD einsatzCRUD = new EinsatzCRUD();
 
-            LocalDate begin = beginnDate.getValue();
-            LocalDate end = endDate.getValue();
-            Einsatz einsatz1 = new Einsatz(this.einsatz.getId(), ereignisComboBox.getValue(), organisationComboBox.getValue(),
-                    java.sql.Date.valueOf(begin), java.sql.Date.valueOf(end));
-            einsatzCRUD.updateEinsatz(einsatz1);
-            showEinsatz();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
+@FXML
+public void updateEinsatz(){
+    LocalDate begin = beginnDate.getValue();
+    LocalDate end = endDate.getValue();
 
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
+    if (begin == null || end == null) {
+        showAlert("Input Error", "Both start and end dates must be selected to update an Einsatz.");
+        return;
     }
 
+
+
+    String details = String.format("Are you sure you want to delete this Einsatz scheduled from %s to %s?",
+            this.einsatz.getBeginn().toString(), this.einsatz.getEnd().toString());
+
+
+    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, details, ButtonType.YES, ButtonType.NO);
+
+    confirmationAlert.showAndWait().ifPresent(response -> {
+        if (response == ButtonType.YES) {
+            try {
+                EinsatzCRUD einsatzCRUD = new EinsatzCRUD();
+                Einsatz einsatz = new Einsatz(this.einsatz.getId(), ereignisComboBox.getValue(),
+                        organisationComboBox.getValue(), java.sql.Date.valueOf(begin), java.sql.Date.valueOf(end));
+                einsatzCRUD.updateEinsatz(einsatz);
+                showEinsatz();
+                clearFields();
+                btnUpdate.setDisable(true);
+                btnDelete.setDisable(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("Update Error", "Failed to update Einsatz: " + e.getMessage());
+            }
+        }
+    });
+}
     @FXML
     public void deleteEinsatz(){
-        try{
-            EinsatzCRUD einsatzCRUD = new EinsatzCRUD();
-            Einsatz einsatz1 = new Einsatz(this.einsatz.getId(), this.einsatz.getEreignis(), this.einsatz.getOrganisation(),
-                    this.einsatz.getBeginn(), this.einsatz.getEnd());
-            einsatzCRUD.deleteEinsatz(einsatz1);
-            showEinsatz();
-            clearFields();
-            btnUpdate.setDisable(true);
-            btnDelete.setDisable(true);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        String details = String.format("Are you sure you want to delete this Einsatz scheduled from %s to %s?",
+                this.einsatz.getBeginn().toString(), this.einsatz.getEnd().toString());
+
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, details, ButtonType.YES, ButtonType.NO);
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    EinsatzCRUD einsatzCRUD = new EinsatzCRUD();
+                    Einsatz einsatz = new Einsatz(this.einsatz.getId(), this.einsatz.getEreignis(),
+                            this.einsatz.getOrganisation(), this.einsatz.getBeginn(), this.einsatz.getEnd());
+                    einsatzCRUD.deleteEinsatz(einsatz);
+                    showEinsatz();
+                    clearFields();
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Delete Error", "Failed to delete Einsatz: " + e.getMessage());
+                }
+            }
+        });
     }
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
 
     @FXML
     private  void clearFields(){
