@@ -14,7 +14,7 @@ public class HelloApplication extends Application {
 
         try {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("adminhome.fxml"));
             Parent root = loader.load();
 
 

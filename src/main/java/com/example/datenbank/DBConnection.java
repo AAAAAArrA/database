@@ -8,7 +8,7 @@ public class DBConnection {
 
     private static Connection con;
 
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=unwetter;user=sa;password=root;encrypt=false";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=unwetter;user=sa;password=12345;encrypt=false";
 
     public void getDBConnection(){
         synchronized (""){

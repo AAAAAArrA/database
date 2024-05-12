@@ -1,24 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Scene?>
-<?import javafx.stage.Stage?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.ReadWriteController">
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Einsatz" fx:id="btnEinsatz" onAction="#handleEinsatz"/>
-        <Button text="Ereignis" fx:id="btnEreignis" onAction="#handleEreignis"/>
-        <Button text="Organisation" fx:id="btnOrganisation" onAction="#handleOrganisation"/>
-    </HBox>
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Region" fx:id="btnRegion" onAction="#handleRegion"/>
-        <Button text="Schaden" fx:id="btnSchaden" onAction="#handleSchaden"/>
-        <Button text="Unwetterart" fx:id="btnUnwetterart" onAction="#handleUnwetterart"/>
-    </HBox>
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20" />
-    </padding>
-</VBox>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.ReadWriteController">
+    <children>
+        <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <center>
+                <HBox prefHeight="361.0" prefWidth="677.0" style="-fx-background-color: lightgray;" BorderPane.alignment="CENTER" />
+            </center>
+            <top>
+                <HBox prefHeight="57.0" prefWidth="600.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../img/storm_2044212-removebg-preview.png" />
+                            </image>
+                            <HBox.margin>
+                                <Insets left="50.0" top="10.0" />
+                            </HBox.margin>
+                        </ImageView>
+                        <Label text="Unwetterart">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets left="10.0" top="20.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="60.0" prefWidth="69.0" style="-fx-background-color: lightblue;" text="Log Out">
+                            <HBox.margin>
+                                <Insets left="275.0" />
+                            </HBox.margin>
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                    </children>
+                    <BorderPane.margin>
+                        <Insets />
+                    </BorderPane.margin>
+                </HBox>
+            </top>
+            <left>
+                <VBox prefHeight="292.0" prefWidth="132.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
+                    <children>
+                        <Button mnemonicParsing="false" fx:id="btnEinsatz" onAction="#handleEinsatz"  prefHeight="38.0" prefWidth="137.0" style="-fx-background-color: lightblue;" text="Einsatz">
+                            <font>
+                                <Font size="14.0" />
+                            </font></Button>
+                        <Button mnemonicParsing="false" fx:id="btnEreignis" onAction="#handleEreignis" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Ereignis">
+                            <font>
+                                <Font size="14.0" />
+                            </font></Button>
+                        <Button mnemonicParsing="false"  fx:id="btnOrganisation" onAction="#handleOrganisation" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Organisation">
+                            <font>
+                                <Font size="14.0" />
+                            </font></Button>
+                        <Button mnemonicParsing="false"  fx:id="btnRegion" onAction="#handleRegion" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Region">
+                            <font>
+                                <Font size="14.0" />
+                            </font></Button>
+                        <Button alignment="CENTER" fx:id="btnSchaden"  onAction="#handleSchaden" mnemonicParsing="false" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Schaden">
+                            <font>
+                                <Font size="14.0" />
+                            </font></Button>
+                        <Button alignment="CENTER"  fx:id="btnUnwetterart"  onAction="#handleUnwetterart" mnemonicParsing="false" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Unwetterart">
+                            <font>
+                                <Font size="14.0" />
+                            </font></Button>
+                    </children>
+                </VBox>
+            </left>
+        </BorderPane>
+    </children>
+</StackPane>
