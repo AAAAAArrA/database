@@ -21,6 +21,12 @@ import java.util.Objects;
 public class LoginService {
     private DBConnection conn = new DBConnection();
 
+    public static String getRoleInSystem() {
+        return roleInSystem;
+    }
+
+    private static String roleInSystem = null;
+
     public boolean login(String username, String password) {
         String sql = "SELECT PasswordHash, Role FROM Users WHERE Username = ?";
         conn.getDBConnection();
@@ -36,7 +42,11 @@ public class LoginService {
                 if (storedHash.equals(hashPassword(password))) {
 
                     System.out.println("Login successful. Role: " + rs.getString("Role"));
-                    openRoleBasedInterface(rs.getString("Role"));
+                    roleInSystem = rs.getString("Role");
+
+                    System.out.println("taak");
+                    openMenuInterface();
+
                     return true;
                 }
             }
@@ -54,40 +64,19 @@ public class LoginService {
         return Base64.getEncoder().encodeToString(hash);
     }
 
-    private void openRoleBasedInterface(String role) throws IOException {
+    private void openMenuInterface() throws IOException {
         try {
             Stage stage = new Stage(); // Создание новой сцены
 
-            switch (role) {
-            case "Reader":
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/readerhome.fxml"));
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                stage.setTitle("Reader Interface");
-                stage.setScene(scene);
-                break;
-            case "Readwrite":
-                FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/com/example/datenbank/readwriterhome.fxml"));
-                Parent root2 = loader2.load();
-                Scene scene2 = new Scene(root2);
-                stage.setTitle("Read-writer Interface");
-                stage.setScene(scene2);
-                break;
-            case "Admin":
-                FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/com/example/datenbank/adminhome.fxml"));
-                Parent root3 = loader3.load();
-                Scene scene3 = new Scene(root3);
-                stage.setTitle("Admin Interface");
-                stage.setScene(scene3);
-                break;
-            default:
-                System.out.println("Unknown role");
-                return;
-        }
-        stage.show();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/adminhome.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setTitle("Home Interface");
+            stage.setScene(scene);
+            stage.show();
     } catch (Exception e) {
         e.printStackTrace();
-        System.out.println("Error loading the view for role: " + role);
+        System.out.println("Error loading the home view." );
     }
     }
 }

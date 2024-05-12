@@ -1,6 +1,7 @@
 package com.example.datenbank.controller;
 
 import com.example.datenbank.model.Region;
+import com.example.datenbank.service.LoginService;
 import com.example.datenbank.service.RegionCRUD;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,14 +13,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class RegionController implements Initializable {
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        showRegion();
-        btnUpdate.setDisable(true);
-        btnDelete.setDisable(true);
-    }
-
-
     @FXML
     public TextField name;
 
@@ -45,6 +38,40 @@ public class RegionController implements Initializable {
     public TableColumn<Region, String> regionName;
 
     private Region region;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        configureAccess(LoginService.getRoleInSystem());
+        showRegion();
+        btnUpdate.setDisable(true);
+        btnDelete.setDisable(true);
+    }
+
+    private void configureAccess(String role) {
+        // Установить видимость кнопок в зависимости от роли
+        switch (role) {
+            case "Admin":
+                setButtonVisibility(true, true, true, true);
+                break;
+            case "Readwrite":
+                setButtonVisibility(true, true, true, false);
+                break;
+            case "Reader":
+                setButtonVisibility(false, false, false, false);
+                break;
+            default:
+                setButtonVisibility(false, false, false, false); // Нет доступа
+                break;
+        }
+    }
+
+    private void setButtonVisibility(boolean newVisible, boolean saveVisible, boolean updateVisible, boolean deleteVisible) {
+        btnNew.setVisible(newVisible);
+        btnSave.setVisible(saveVisible);
+        btnUpdate.setVisible(updateVisible);
+        btnDelete.setVisible(deleteVisible);
+    }
+
 
     @FXML
     private void addRegion(){

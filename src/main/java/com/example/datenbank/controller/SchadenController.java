@@ -1,6 +1,7 @@
 package com.example.datenbank.controller;
 
 import com.example.datenbank.model.Schaden;
+import com.example.datenbank.service.LoginService;
 import com.example.datenbank.service.SchadenCRUD;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,10 +38,37 @@ public class SchadenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        configureAccess(LoginService.getRoleInSystem());
         showSchaden();
         btnUpdate.setDisable(true);
         btnDelete.setDisable(true);
     }
+
+    private void configureAccess(String role) {
+        // Установить видимость кнопок в зависимости от роли
+        switch (role) {
+            case "Admin":
+                setButtonVisibility(true, true, true, true);
+                break;
+            case "Readwrite":
+                setButtonVisibility(true, true, true, false);
+                break;
+            case "Reader":
+                setButtonVisibility(false, false, false, false);
+                break;
+            default:
+                setButtonVisibility(false, false, false, false); // Нет доступа
+                break;
+        }
+    }
+
+    private void setButtonVisibility(boolean newVisible, boolean saveVisible, boolean updateVisible, boolean deleteVisible) {
+        btnNew.setVisible(newVisible);
+        btnSave.setVisible(saveVisible);
+        btnUpdate.setVisible(updateVisible);
+        btnDelete.setVisible(deleteVisible);
+    }
+
 
     private void showSchaden() {
         SchadenCRUD handler = new SchadenCRUD();

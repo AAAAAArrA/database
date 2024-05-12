@@ -32,7 +32,7 @@
    <center>
       <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button depthTest="DISABLE" layoutX="90.0" layoutY="266.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="162.0" style="-fx-background-color: lightblue;" text="Log in" textAlignment="CENTER" textFill="#4e4949">
+            <Button depthTest="DISABLE" onAction="#handleLogin" layoutX="90.0" layoutY="266.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="162.0" style="-fx-background-color: lightblue;" text="Log in" textAlignment="CENTER" textFill="#4e4949">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
