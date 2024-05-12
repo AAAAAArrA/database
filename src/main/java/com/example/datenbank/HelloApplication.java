@@ -20,6 +20,7 @@ public class HelloApplication extends Application {
 
             Scene scene = new Scene(root);
 
+
             stage.setTitle("База данных 'Unwetter'");
             stage.setScene(scene);
             stage.show();
