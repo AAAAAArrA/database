@@ -3,6 +3,7 @@ package com.example.datenbank.controller;
 import com.example.datenbank.model.*;
 import com.example.datenbank.service.EinsatzCRUD;
 import com.example.datenbank.service.EreignisCRUD;
+import com.example.datenbank.service.LoginService;
 import com.example.datenbank.service.OrganisationCRUD;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -76,6 +77,7 @@ public class EinsatzController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        configureAccess(LoginService.getRoleInSystem());
         EreignisCRUD ereignisCRUD = new EreignisCRUD();
         List<Ereignis> ereignisList = ereignisCRUD.getEreignisList();
 
@@ -102,6 +104,30 @@ public class EinsatzController implements Initializable {
         });
 
         showEinsatz();
+    }
+    private void configureAccess(String role) {
+        // Установить видимость кнопок в зависимости от роли
+        switch (role) {
+            case "Admin":
+                setButtonVisibility(true, true, true, true);
+                break;
+            case "Readwrite":
+                setButtonVisibility(true, true, true, false);
+                break;
+            case "Reader":
+                setButtonVisibility(false, false, false, false);
+                break;
+            default:
+                setButtonVisibility(false, false, false, false); // Нет доступа
+                break;
+        }
+    }
+
+    private void setButtonVisibility(boolean newVisible, boolean saveVisible, boolean updateVisible, boolean deleteVisible) {
+        btnNew.setVisible(newVisible);
+        btnSave.setVisible(saveVisible);
+        btnUpdate.setVisible(updateVisible);
+        btnDelete.setVisible(deleteVisible);
     }
 
     @FXML
