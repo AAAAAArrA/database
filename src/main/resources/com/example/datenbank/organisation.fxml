@@ -64,5 +64,6 @@
         </columns>
     </TableView>
       <TextField fx:id="name" layoutX="133.0" layoutY="56.0" prefHeight="20.0" prefWidth="200.0" />
+    <Button fx:id="backButton" layoutX="488.0" layoutY="39.0" mnemonicParsing="false" text="MENU" onAction="#handleBackButtonAction"/>
 </children>
 </AnchorPane>

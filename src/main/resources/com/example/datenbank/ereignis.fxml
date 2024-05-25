@@ -95,5 +95,6 @@
             </Label>
             </children>
         </GridPane>
+        <Button fx:id="backButton" layoutX="488.0" layoutY="39.0" mnemonicParsing="false" text="MENU" onAction="#handleBackButtonAction"/>
     </children>
 </AnchorPane>

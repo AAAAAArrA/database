@@ -7,11 +7,17 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -43,6 +49,9 @@ public class EreignisController implements Initializable {
 
     @FXML
     public Button btnDelete;
+
+    @FXML
+    private Button backButton;
 
     @FXML
     public TableView<Ereignis> tableView;
@@ -296,5 +305,19 @@ public class EreignisController implements Initializable {
         btnDelete.setDisable(true);
         clearFields();
         btnSave.setDisable(false);
+    }
+
+
+    @FXML
+    void handleBackButtonAction(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/adminhome.fxml"));
+        try {
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
