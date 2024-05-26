@@ -12,45 +12,45 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.LoginController">
    <left>
-      <AnchorPane prefHeight="400.0" prefWidth="257.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="400.0" prefWidth="380.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="116.0" fitWidth="109.0" layoutX="74.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="129.0" fitWidth="146.0" layoutX="126.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../img/storm_2044212-removebg-preview.png" />
                </image>
             </ImageView>
-            <Label layoutX="41.0" layoutY="223.0" prefHeight="46.0" prefWidth="176.0" text="Unwetterdatenbank" textAlignment="CENTER">
+            <Label layoutX="76.0" layoutY="264.0" prefHeight="46.0" prefWidth="248.0" text="Unwetterdatenbank" textAlignment="CENTER">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="500.0" prefWidth="478.0" BorderPane.alignment="CENTER">
          <children>
-            <Button depthTest="DISABLE" onAction="#handleLogin" layoutX="90.0" layoutY="266.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="162.0" style="-fx-background-color: lightblue;" text="Log in" textAlignment="CENTER" textFill="#4e4949">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <TextField fx:id="usernameField" layoutX="73.0" layoutY="133.0" prefHeight="26.0" prefWidth="194.0" promptText="Username">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <Text fx:id="actiontarget" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label layoutX="139.0" layoutY="67.0" text="Sign in">
+            <Button defaultButton="true" depthTest="DISABLE" layoutX="108.0" layoutY="319.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="49.0" prefWidth="190.0" style="-fx-background-color: lightblue;" text="Log in" textAlignment="CENTER" textFill="#4e4949">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
-            </Label>
-            <PasswordField fx:id="passwordField" layoutX="73.0" layoutY="187.0" prefHeight="26.0" prefWidth="194.0" promptText="Password">
+            </Button>
+            <TextField fx:id="usernameField" layoutX="98.0" layoutY="180.0" prefHeight="40.0" prefWidth="225.0" promptText="Username">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <Text fx:id="actiontarget" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label layoutX="164.0" layoutY="105.0" text="Sign in">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwordField" layoutX="97.0" layoutY="242.0" prefHeight="40.0" prefWidth="225.0" promptText="Password">
+               <font>
+                  <Font size="18.0" />
                </font></PasswordField>
          </children>
       </AnchorPane>

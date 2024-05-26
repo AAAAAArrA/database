@@ -306,6 +306,72 @@ public class EreignisController implements Initializable {
         clearFields();
         btnSave.setDisable(false);
     }
+    @FXML
+    private void handleEinsatz() throws IOException {
+        Stage stage  = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/einsatz.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setTitle("Ensatz Interface");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void handleEreignis() throws IOException {
+        Stage stage  = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/ereignis.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setTitle("Ensatz Interface");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void handleOrganisation() throws IOException {
+        Stage stage  = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/organisation.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setTitle("Ensatz Interface");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void handleRegion() throws IOException {
+        Stage stage  = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/region.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setTitle("Ensatz Interface");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void handleSchaden() throws IOException {
+        Stage stage  = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/schaden.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setTitle("Ensatz Interface");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void handleUnwetterart() throws IOException {
+        Stage stage  = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/unwetterart.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setTitle("Ensatz Interface");
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
 
     @FXML

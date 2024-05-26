@@ -8,14 +8,23 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.AdminHomeController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.AdminHomeController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <center>
-            <HBox prefHeight="361.0" prefWidth="677.0" style="-fx-background-color: lightgray;" BorderPane.alignment="CENTER" />
+            <HBox prefHeight="342.0" prefWidth="600.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="448.0" fitWidth="460.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../img/unwetter.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="350.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children></HBox>
          </center>
          <top>
             <HBox prefHeight="57.0" prefWidth="600.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
@@ -25,20 +34,44 @@
                         <Image url="@../../../img/storm_2044212-removebg-preview.png" />
                      </image>
                      <HBox.margin>
-                        <Insets left="50.0" top="10.0" />
+                        <Insets left="20.0" top="10.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label text="Unwetterart">
+                  <Label prefHeight="27.0" prefWidth="162.0" text="Unwetterart">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="16.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="10.0" top="20.0" />
+                        <Insets left="5.0" top="15.0" />
                      </HBox.margin>
                   </Label>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="60.0" prefWidth="69.0" style="-fx-background-color: lightblue;" text="Log Out">
+                  <Button fx:id="btnEinsatz" mnemonicParsing="false" onAction="#handleEinsatz" prefHeight="60.0" prefWidth="137.0" style="-fx-background-color: lightblue;" text="Einsatz">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
+                  <Button fx:id="btnEreignis" mnemonicParsing="false" onAction="#handleEreignis" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Ereignis">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
+                  <Button fx:id="btnOrganisation" mnemonicParsing="false" onAction="#handleOrganisation" prefHeight="58.0" prefWidth="173.0" style="-fx-background-color: lightblue;" text="Organisation">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
+                  <Button fx:id="btnRegion" mnemonicParsing="false" onAction="#handleRegion" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Region">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
+                  <Button fx:id="btnSchaden" alignment="CENTER" mnemonicParsing="false" onAction="#handleSchaden" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Schaden">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
+                  <Button fx:id="btnUnwetterart" alignment="CENTER" mnemonicParsing="false" onAction="#handleUnwetterart" prefHeight="58.0" prefWidth="146.0" style="-fx-background-color: lightblue;" text="Unwetterart">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="58.0" prefWidth="130.0" style="-fx-background-color: lightblue;" text="Log Out">
                      <HBox.margin>
-                        <Insets left="275.0" />
+                        <Insets />
                      </HBox.margin>
                      <font>
                         <Font size="14.0" />
@@ -50,36 +83,6 @@
                </BorderPane.margin>
             </HBox>
          </top>
-         <left>
-            <VBox prefHeight="292.0" prefWidth="132.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
-               <children>
-                  <Button mnemonicParsing="false" fx:id="btnEinsatz" onAction="#handleEinsatz"  prefHeight="38.0" prefWidth="137.0" style="-fx-background-color: lightblue;" text="Einsatz">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Button>
-                  <Button mnemonicParsing="false" fx:id="btnEreignis" onAction="#handleEreignis" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Ereignis">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Button>
-                  <Button mnemonicParsing="false"  fx:id="btnOrganisation" onAction="#handleOrganisation" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Organisation">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Button>
-                  <Button mnemonicParsing="false"  fx:id="btnRegion" onAction="#handleRegion" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Region">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Button>
-                  <Button alignment="CENTER" fx:id="btnSchaden"  onAction="#handleSchaden" mnemonicParsing="false" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Schaden">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Button>
-                  <Button alignment="CENTER"  fx:id="btnUnwetterart"  onAction="#handleUnwetterart" mnemonicParsing="false" prefHeight="38.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Unwetterart">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Button>
-               </children>
-            </VBox>
-         </left>
       </BorderPane>
    </children>
 </StackPane>
