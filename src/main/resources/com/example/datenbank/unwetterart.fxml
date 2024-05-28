@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.UnwetterArtController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.UnwetterArtController">
     <children>
-        <GridPane layoutX="192.0" layoutY="39.0">
+        <GridPane layoutX="235.0" layoutY="121.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="0.0" prefWidth="0.0" />
@@ -35,38 +39,92 @@
                 </GridPane>
             </children>
         </GridPane>
-        <Button fx:id="btnNew" layoutX="48.0" layoutY="124.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="84.0" text="NEW">
+        <Button fx:id="btnNew" layoutX="46.0" layoutY="226.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
             <font>
-                <Font name="System Bold" size="14.0" />
+                <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnSave" layoutX="150.0" layoutY="124.0" mnemonicParsing="false" onAction="#addUnwetterArt" prefHeight="26.0" prefWidth="84.0" text="SAVE" textAlignment="CENTER">
+        <Button fx:id="btnSave" layoutX="227.0" layoutY="226.0" mnemonicParsing="false" onAction="#addUnwetterArt" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="SAVE" textAlignment="CENTER">
             <font>
-                <Font name="System Bold" size="14.0" />
+                <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnUpdate" layoutX="250.0" layoutY="124.0" mnemonicParsing="false" onAction="#updateUnwetterArt" prefHeight="26.0" prefWidth="84.0" text="UPDATE">
+        <Button fx:id="btnUpdate" layoutX="401.0" layoutY="226.0" mnemonicParsing="false" onAction="#updateUnwetterArt" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="UPDATE">
             <font>
-                <Font name="System Bold" size="14.0" />
+                <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnDelete" layoutX="350.0" layoutY="124.0" mnemonicParsing="false" onAction="#deleteUnwetterArt" prefHeight="26.0" prefWidth="84.0" text="DELETE">
+        <Button fx:id="btnDelete" layoutX="575.0" layoutY="226.0" mnemonicParsing="false" onAction="#deleteUnwetterArt" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="DELETE">
             <font>
-                <Font name="System Bold" size="14.0" />
+                <Font size="14.0" />
             </font>
         </Button>
-        <TableView fx:id="tableView" layoutX="29.0" layoutY="175.0" onMouseClicked="#mouseClicked" prefHeight="200.0" prefWidth="486.0">
+        <TableView fx:id="tableView" layoutX="20.0" layoutY="276.0" onMouseClicked="#mouseClicked" prefHeight="200.0" prefWidth="762.0" style="-fx-background-color: #FFFAF0;">
             <columns>
-                <TableColumn fx:id="collId" prefWidth="117.60003662109375" text="ID" />
-                <TableColumn fx:id="unwetterArtBezeichnung" prefWidth="367.1999877929687" text="Name" />
+                <TableColumn fx:id="collId" prefWidth="170.39999771118164" text="ID" />
+                <TableColumn fx:id="unwetterArtBezeichnung" prefWidth="428.00001525878906" text="Name" />
             </columns>
         </TableView>
-          <TextField fx:id="bezeichnung" layoutX="174.0" layoutY="59.0" prefHeight="20.0" prefWidth="200.0" />
-          <Label layoutX="64.0" layoutY="58.0" text="Unwetter" textFill="#201f1f">
+          <TextField fx:id="bezeichnung" layoutX="177.0" layoutY="154.0" prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #FFFAF0; -fx-border-color: lightgray; -fx-border-width: 1;" />
+          <Label layoutX="73.0" layoutY="154.0" text="Unwetter" textFill="#201f1f">
               <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font size="18.0" />
               </font>
           </Label>
-        <Button fx:id="backButton" layoutX="488.0" layoutY="39.0" mnemonicParsing="false" text="MENU" onAction="#handleBackButtonAction"/>
+      <HBox layoutX="1.0" prefHeight="60.0" prefWidth="800.0" style="-fx-background-color: lightblue;">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../img/storm_2044212-removebg-preview.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label prefHeight="27.0" prefWidth="162.0" text="Unwetterart">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="15.0" />
+               </HBox.margin>
+            </Label>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButtonAction" prefHeight="59.0" prefWidth="139.0" style="-fx-background-color: lightblue;" text="Startseite">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnEinsatz" mnemonicParsing="false" onAction="#handleEinsatz" prefHeight="59.0" prefWidth="137.0" style="-fx-background-color: lightblue;" text="Einsatz">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnEreignis" mnemonicParsing="false" onAction="#handleEreignis" prefHeight="59.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Ereignis">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnOrganisation" mnemonicParsing="false" onAction="#handleOrganisation" prefHeight="58.0" prefWidth="173.0" style="-fx-background-color: lightblue;" text="Organisation">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnRegion" mnemonicParsing="false" onAction="#handleRegion" prefHeight="59.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Region">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnSchaden" alignment="CENTER" mnemonicParsing="false" onAction="#handleSchaden" prefHeight="59.0" prefWidth="135.0" style="-fx-background-color: lightblue;" text="Schaden">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnUnwetterart" alignment="CENTER" mnemonicParsing="false" onAction="#handleUnwetterart" prefHeight="59.0" prefWidth="146.0" style="-fx-background-color: lightblue;" text="Unwetterart">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
     </children>
 </AnchorPane>

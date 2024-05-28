@@ -30,40 +30,40 @@
                 <RowConstraints maxHeight="32.799993896484374" minHeight="10.0" prefHeight="32.799993896484374" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <ComboBox fx:id="unwetterComboBox" prefWidth="150.0" GridPane.rowIndex="1" />
-                <DatePicker fx:id="datePicker" />
-            <ComboBox fx:id="regionComboBox" prefWidth="150.0" GridPane.rowIndex="2" />
-            <ComboBox fx:id="schadenComboBox" prefWidth="150.0" GridPane.rowIndex="3" />
+                <ComboBox fx:id="unwetterComboBox" prefWidth="150.0" style="-fx-background-color: #FFFAF0; -fx-border-color: lightgray; -fx-border-width: 1;" GridPane.rowIndex="1" />
+                <DatePicker fx:id="datePicker" style="-fx-background-color: #FFFAF0; -fx-border-color: lightgray; -fx-border-width: 1;" />
+            <ComboBox fx:id="regionComboBox" prefWidth="150.0" style="-fx-background-color: #FFFAF0; -fx-border-color: lightgray; -fx-border-width: 1;" GridPane.rowIndex="2" />
+            <ComboBox fx:id="schadenComboBox" prefWidth="150.0" style="-fx-background-color: #FFFAF0; -fx-border-color: lightgray; -fx-border-width: 1;" GridPane.rowIndex="3" />
             </children>
         </GridPane>
-        <Button fx:id="btnNew" layoutX="125.0" layoutY="244.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="84.0" text="NEW">
+        <Button fx:id="btnNew" layoutX="56.0" layoutY="241.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
             <font>
-                <Font name="System Bold" size="14.0" />
+                <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnSave" layoutX="221.0" layoutY="244.0" mnemonicParsing="false" onAction="#addEreignis" prefHeight="26.0" prefWidth="84.0" text="SAVE" textAlignment="CENTER">
+        <Button fx:id="btnSave" layoutX="234.0" layoutY="241.0" mnemonicParsing="false" onAction="#addEreignis" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="SAVE" textAlignment="CENTER">
             <font>
-                <Font name="System Bold" size="14.0" />
+                <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnUpdate" layoutX="321.0" layoutY="244.0" mnemonicParsing="false" onAction="#updateEreignis" prefHeight="26.0" prefWidth="84.0" text="UPDATE">
+        <Button fx:id="btnUpdate" layoutX="410.0" layoutY="241.0" mnemonicParsing="false" onAction="#updateEreignis" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="UPDATE">
             <font>
-                <Font name="System Bold" size="14.0" />
+                <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnDelete" layoutX="421.0" layoutY="244.0" mnemonicParsing="false" onAction="#deleteEreignis" prefHeight="26.0" prefWidth="84.0" text="DELETE">
+        <Button fx:id="btnDelete" layoutX="582.0" layoutY="241.0" mnemonicParsing="false" onAction="#deleteEreignis" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="DELETE">
             <font>
-                <Font name="System Bold" size="14.0" />
+                <Font size="14.0" />
             </font>
         </Button>
-        <TableView fx:id="tableView" layoutX="54.0" layoutY="286.0" onMouseClicked="#mouseClicked" prefHeight="199.0" prefWidth="711.0">
+        <TableView fx:id="tableView" layoutX="25.0" layoutY="286.0" onMouseClicked="#mouseClicked" prefHeight="199.0" prefWidth="762.0" style="-fx-background-color: #FFFAF0;">
             <columns>
                 <TableColumn fx:id="collId" prefWidth="56.0" text="ID" />
                 <TableColumn fx:id="datum" prefWidth="82.0" text="Date" />
                 <TableColumn fx:id="unwetter" prefWidth="103.0" text="Unwetter" />
                 <TableColumn fx:id="region" prefWidth="106.0" text="Region" />
-                <TableColumn fx:id="hoehe" prefWidth="96.0" text="Hoehe" />
-                <TableColumn fx:id="beschreibung" prefWidth="266.4000122070313" text="Beschreibung" />
+                <TableColumn fx:id="hoehe" prefWidth="131.20001220703125" text="Hoehe" />
+                <TableColumn fx:id="beschreibung" prefWidth="283.199951171875" text="Beschreibung" />
             </columns>
         </TableView>
         <GridPane layoutX="125.0" layoutY="97.0" prefHeight="128.0" prefWidth="163.0">
@@ -79,22 +79,22 @@
             <children>
                 <Label text="Unwetter" textFill="#181717" GridPane.rowIndex="1">
                     <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font size="20.0" />
                     </font>
                 </Label>
                 <Label text="Region" textFill="#181717" GridPane.rowIndex="2">
                     <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font size="20.0" />
                     </font>
                 </Label>
                 <Label text="Date" textFill="#181717">
                     <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font size="20.0" />
                     </font>
                 </Label>
             <Label text="Schaden" textFill="#181717" GridPane.rowIndex="3">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
             </children>

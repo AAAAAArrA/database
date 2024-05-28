@@ -12,16 +12,16 @@
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.AdminHomeController">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <BorderPane prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: lightblue;">
          <center>
             <HBox prefHeight="342.0" prefWidth="600.0" style="-fx-background-color: lightblue;" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="448.0" fitWidth="460.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="438.0" fitWidth="390.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../img/unwetter.png" />
                      </image>
                      <HBox.margin>
-                        <Insets left="350.0" />
+                        <Insets />
                      </HBox.margin>
                   </ImageView>
                </children></HBox>
@@ -69,20 +69,30 @@
                      <font>
                         <Font size="14.0" />
                      </font></Button>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="58.0" prefWidth="130.0" style="-fx-background-color: lightblue;" text="Log Out">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
                </children>
                <BorderPane.margin>
                   <Insets />
                </BorderPane.margin>
             </HBox>
          </top>
+         <left>
+            <Label prefHeight="91.0" prefWidth="358.0" style="-fx-background-color: lightblue;" text="Stärkung der Widerstandsfähigkeit " textAlignment="CENTER" textFill="#614f4f" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets left="40.0" top="-200.0" />
+               </BorderPane.margin>
+            </Label>
+         </left>
       </BorderPane>
+      <Label text="gegen Naturkatastrophen" textFill="#614f4f">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+         <StackPane.margin>
+            <Insets left="-400.0" top="-80.0" />
+         </StackPane.margin>
+      </Label>
    </children>
 </StackPane>
