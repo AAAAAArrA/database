@@ -20,7 +20,7 @@ public class EreignisCRUD {
 
     public ObservableList<Ereignis> getEreignisList(){
         ObservableList<Ereignis> list = FXCollections.observableArrayList();
-        String query = "SELECT e.Ereignis_ID, e.Datum, ua.Bezeichnung AS Unwetterart, r.Name AS Region, s.Hoehe, s.Beschreibung " +
+        String query = "SELECT e.Ereignis_ID, e.Datum, e.Unwetterart_ID,  ua.Bezeichnung AS Unwetterart, e.Region_ID, r.Name AS Region, e.Schaden_ID,  s.Hoehe, s.Beschreibung " +
                 "FROM ereignis e " +
                 "JOIN unwetterart ua ON e.Unwetterart_ID = ua.Unwetterart_ID " +
                 "JOIN region r ON e.Region_ID = r.Region_ID " +
@@ -36,14 +36,17 @@ public class EreignisCRUD {
                 ereignis.setDatum(rs.getDate("Datum"));
 
                 UnwetterArt unwetterArt = new UnwetterArt();
+                unwetterArt.setId(rs.getInt("Unwetterart_ID"));
                 unwetterArt.setBezeichnung(rs.getString("Unwetterart"));
                 ereignis.setUnwetter(unwetterArt);
 
                 Region region = new Region();
+                region.setId(rs.getInt("Region_ID"));
                 region.setName(rs.getString("Region"));
                 ereignis.setRegionName(region);
 
                 Schaden schaden = new Schaden();
+                schaden.setSchadenID(rs.getInt("Schaden_ID"));
                 schaden.setHoehe(rs.getInt("Hoehe"));
                 schaden.setBeschreibung(rs.getString("Beschreibung"));
                 ereignis.setSchaden(schaden);

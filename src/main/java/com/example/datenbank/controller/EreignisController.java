@@ -3,6 +3,7 @@ package com.example.datenbank.controller;
 
 import com.example.datenbank.model.*;
 import com.example.datenbank.service.*;
+import com.example.datenbank.util.JAXBUtil;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -15,8 +16,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -27,6 +32,8 @@ import java.util.ResourceBundle;
 
 public class EreignisController implements Initializable {
 
+    @FXML
+    private Button exportButton;
     @FXML
     public DatePicker datePicker;
 
@@ -306,6 +313,29 @@ public class EreignisController implements Initializable {
         clearFields();
         btnSave.setDisable(false);
     }
+
+    @FXML
+    private void exportEreignisToXML() {
+        try {
+            EreignisCRUD ereignisCRUD = new EreignisCRUD();
+//            OrganisationCRUD organisationCRUD = new OrganisationCRUD();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+            File file = fileChooser.showSaveDialog(new Stage());
+
+            if (file != null) {
+                FileWriter writer = new FileWriter(file);
+//                String xml = JAXBUtil.toXml(organisationCRUD.getOrganisationList());
+                String xml = JAXBUtil.toXml(ereignisCRUD.getEreignisList());
+                writer.write(xml);
+                writer.close();
+            }
+        } catch (JAXBException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void handleEinsatz() throws IOException {
         Stage stage  = new Stage();
