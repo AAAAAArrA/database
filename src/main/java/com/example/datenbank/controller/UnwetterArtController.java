@@ -1,6 +1,5 @@
 package com.example.datenbank.controller;
 
-
 import com.example.datenbank.model.UnwetterArt;
 import com.example.datenbank.service.LoginService;
 import com.example.datenbank.service.UnwetterArtCRUD;
@@ -13,13 +12,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class UnwetterArtController implements Initializable {
+    @FXML
+    private Button exportButton;
+
     @FXML
     public TextField bezeichnung;
 
@@ -58,7 +62,6 @@ public class UnwetterArtController implements Initializable {
     }
 
     private void configureAccess(String role) {
-        // Установить видимость кнопок в зависимости от роли
         switch (role) {
             case "Admin":
                 setButtonVisibility(true, true, true, true);
@@ -70,7 +73,7 @@ public class UnwetterArtController implements Initializable {
                 setButtonVisibility(false, false, false, false);
                 break;
             default:
-                setButtonVisibility(false, false, false, false); // Нет доступа
+                setButtonVisibility(false, false, false, false);
                 break;
         }
     }
@@ -82,9 +85,8 @@ public class UnwetterArtController implements Initializable {
         btnDelete.setVisible(deleteVisible);
     }
 
-
     @FXML
-    private void addUnwetterArt(){
+    private void addUnwetterArt() {
         UnwetterArt unwetterArt = new UnwetterArt(bezeichnung.getText());
         UnwetterArtCRUD handler = new UnwetterArtCRUD();
         handler.addUnwetterArt(unwetterArt);
@@ -92,17 +94,16 @@ public class UnwetterArtController implements Initializable {
     }
 
     @FXML
-    private void showUnwetterArt(){
+    private void showUnwetterArt() {
         UnwetterArtCRUD handler = new UnwetterArtCRUD();
         ObservableList<UnwetterArt> list = handler.getUnwetterArtList();
-        collId.setCellValueFactory(new PropertyValueFactory<UnwetterArt, Integer>("id"));
-        unwetterArtBezeichnung.setCellValueFactory(new PropertyValueFactory<UnwetterArt, String>("Bezeichnung"));
+        collId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        unwetterArtBezeichnung.setCellValueFactory(new PropertyValueFactory<>("bezeichnung"));
         tableView.setItems(list);
     }
 
-
     public void mouseClicked(javafx.scene.input.MouseEvent mouseEvent) {
-        try{
+        try {
             UnwetterArt unwetterArt = tableView.getSelectionModel().getSelectedItem();
             unwetterArt = new UnwetterArt(unwetterArt.getId(), unwetterArt.getBezeichnung());
             this.unwetterArt = unwetterArt;
@@ -112,28 +113,12 @@ public class UnwetterArtController implements Initializable {
             btnDelete.setDisable(false);
             btnSave.setDisable(true);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-//    public void updateUnwetterArt(){
-//        try{
-//            UnwetterArtCRUD handler = new UnwetterArtCRUD();
-//            UnwetterArt unwetterArt = new UnwetterArt(this.unwetterArt.getId(), bezeichnung.getText());
-//            handler.updateUnwetterArt(unwetterArt);
-//            showUnwetterArt();
-//            clearFields();
-//            btnUpdate.setDisable(true);
-//            btnDelete.setDisable(true);
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-
     public void updateUnwetterArt() {
-
         String currentBezeichnung = bezeichnung.getText();
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
                 "Are you sure, you want to update UnwetterArt with name: " + currentBezeichnung + "?",
@@ -145,8 +130,8 @@ public class UnwetterArtController implements Initializable {
                     UnwetterArtCRUD handler = new UnwetterArtCRUD();
                     UnwetterArt unwetterArt = new UnwetterArt(this.unwetterArt.getId(), currentBezeichnung);
                     handler.updateUnwetterArt(unwetterArt);
-                    showUnwetterArt(); // Обновление отображения данных.
-                    clearFields(); // Очистка полей формы.
+                    showUnwetterArt();
+                    clearFields();
                     btnUpdate.setDisable(true);
                     btnDelete.setDisable(true);
                 } catch (Exception e) {
@@ -164,41 +149,36 @@ public class UnwetterArtController implements Initializable {
         alert.showAndWait();
     }
 
+    public void deleteUnwetterArt() {
+        String currentBezeichnung = this.unwetterArt.getBezeichnung();
 
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to delete UnwetterArt with the designation: " + currentBezeichnung + "?",
+                ButtonType.YES, ButtonType.NO);
 
-public void deleteUnwetterArt() {
-
-    String currentBezeichnung = this.unwetterArt.getBezeichnung();
-
-
-    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
-            "Are you sure you want to delete UnwetterArt with the designation: " + currentBezeichnung + "?",
-            ButtonType.YES, ButtonType.NO);
-
-
-    confirmationAlert.showAndWait().ifPresent(response -> {
-        if (response == ButtonType.YES) {
-            try {
-                UnwetterArtCRUD handler = new UnwetterArtCRUD();
-                UnwetterArt unwetterArt = new UnwetterArt(this.unwetterArt.getId(), currentBezeichnung);
-                handler.delete(unwetterArt);
-                showUnwetterArt();
-                clearFields();
-                btnUpdate.setDisable(true);
-                btnDelete.setDisable(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert("Delete error", "Failed to delete UnwetterArt: " + e.getMessage());
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    UnwetterArtCRUD handler = new UnwetterArtCRUD();
+                    handler.delete(this.unwetterArt);
+                    showUnwetterArt();
+                    clearFields();
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Delete error", "Failed to delete UnwetterArt: " + e.getMessage());
+                }
             }
-        }
-    });
-}
-    private  void clearFields(){
+        });
+    }
+
+    private void clearFields() {
         bezeichnung.setText("");
     }
 
     @FXML
-    private void clickNew(){
+    private void clickNew() {
         btnUpdate.setDisable(true);
         btnDelete.setDisable(true);
         clearFields();
@@ -206,10 +186,26 @@ public void deleteUnwetterArt() {
     }
 
     @FXML
-    void handleBackButtonAction(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/adminhome.fxml"));
+    private void exportUnwetterArtToXML() {
         try {
-            Parent root = loader.load();
+            UnwetterArtCRUD unwetterArtCRUD = new UnwetterArtCRUD();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+            File file = fileChooser.showSaveDialog(new Stage());
+
+            if (file != null) {
+                unwetterArtCRUD.exportUnwetterArtToXML(file);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void handleBackButtonAction(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/example/datenbank/adminhome.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(scene);
@@ -220,66 +216,60 @@ public void deleteUnwetterArt() {
 
     @FXML
     private void handleEinsatz() throws IOException {
-        Stage stage  = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/einsatz.fxml"));
-        Parent root = loader.load();
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/datenbank/einsatz.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Einsatz Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleEreignis() throws IOException {
-        Stage stage  = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/ereignis.fxml"));
-        Parent root = loader.load();
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/datenbank/ereignis.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Ereignis Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleOrganisation() throws IOException {
-        Stage stage  = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/organisation.fxml"));
-        Parent root = loader.load();
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/datenbank/organisation.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Organisation Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleRegion() throws IOException {
-        Stage stage  = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/region.fxml"));
-        Parent root = loader.load();
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/datenbank/region.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Region Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleSchaden() throws IOException {
-        Stage stage  = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/schaden.fxml"));
-        Parent root = loader.load();
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/datenbank/schaden.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Schaden Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleUnwetterart() throws IOException {
-        Stage stage  = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/unwetterart.fxml"));
-        Parent root = loader.load();
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/datenbank/unwetterart.fxml"));
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Unwetterart Interface");
         stage.setScene(scene);
         stage.show();
     }

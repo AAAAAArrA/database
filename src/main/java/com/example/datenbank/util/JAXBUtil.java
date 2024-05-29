@@ -4,6 +4,7 @@ import com.example.datenbank.model.Einsatz;
 import com.example.datenbank.model.Organisation;
 import com.example.datenbank.model.Region;
 import com.example.datenbank.model.Schaden;
+import com.example.datenbank.model.UnwetterArt;
 import javafx.collections.ObservableList;
 
 import javax.xml.bind.JAXBContext;
@@ -40,6 +41,10 @@ public class JAXBUtil {
             context = JAXBContext.newInstance(EinsatzWrapper.class);
             wrapper = new EinsatzWrapper();
             ((EinsatzWrapper) wrapper).setEinsatzList(list.stream().map(item -> (Einsatz) item).collect(Collectors.toList()));
+        } else if (firstItem instanceof UnwetterArt) {
+            context = JAXBContext.newInstance(UnwetterartWrapper.class);
+            wrapper = new UnwetterartWrapper();
+            ((UnwetterartWrapper) wrapper).setUnwetterArts(list.stream().map(item -> (UnwetterArt) item).collect(Collectors.toList()));
         } else {
             throw new JAXBException("Unsupported type: " + clazz.getName());
         }

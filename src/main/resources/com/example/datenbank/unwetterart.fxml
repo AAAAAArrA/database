@@ -124,6 +124,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
+             <Button fx:id="exportButton" text="Export to XML" onAction="#exportUnwetterArtToXML"/>
          </children>
       </HBox>
     </children>

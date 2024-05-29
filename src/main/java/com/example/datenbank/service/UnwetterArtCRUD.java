@@ -2,9 +2,14 @@ package com.example.datenbank.service;
 
 import com.example.datenbank.DBConnection;
 import com.example.datenbank.model.UnwetterArt;
+import com.example.datenbank.util.JAXBUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -100,6 +105,15 @@ public class UnwetterArtCRUD {
             e.printStackTrace();
         }
         return unwetterArt;
+    }
+    public void exportUnwetterArtToXML(File file) {
+        ObservableList<UnwetterArt> unwetterArtList = getUnwetterArtList();
+        try (FileWriter writer = new FileWriter(file)) {
+            String xml = JAXBUtil.toXml(unwetterArtList);
+            writer.write(xml);
+        } catch (IOException | JAXBException e) {
+            e.printStackTrace();
+        }
     }
 }
 
