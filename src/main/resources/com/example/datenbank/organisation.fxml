@@ -94,26 +94,29 @@
               <Font size="18.0" />
           </font>
       </Label>
-    <Button fx:id="btnNew" layoutX="80.0" layoutY="220.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
+    <Button fx:id="btnNew" layoutX="41.0" layoutY="220.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
-    <Button fx:id="btnSave" layoutX="250.0" layoutY="220.0" mnemonicParsing="false" onAction="#addOrganisation" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="SAVE" textAlignment="CENTER">
+    <Button fx:id="btnSave" layoutX="193.0" layoutY="220.0" mnemonicParsing="false" onAction="#addOrganisation" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="SAVE" textAlignment="CENTER">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
-    <Button fx:id="btnUpdate" layoutX="425.0" layoutY="220.0" mnemonicParsing="false" onAction="#updateOrganisation" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="UPDATE">
+    <Button fx:id="btnUpdate" layoutX="345.0" layoutY="220.0" mnemonicParsing="false" onAction="#updateOrganisation" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="UPDATE">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
-    <Button fx:id="btnDelete" layoutX="601.0" layoutY="220.0" mnemonicParsing="false" onAction="#deleteOrganisation" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="DELETE">
+    <Button fx:id="btnDelete" layoutX="491.0" layoutY="220.0" mnemonicParsing="false" onAction="#deleteOrganisation" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="DELETE">
         <font>
             <Font size="14.0" />
         </font>
     </Button>
-    <Button fx:id="exportButton" text="Export to XML" onAction="#exportOrganisationsToXML"/>
+    <Button fx:id="exportButton" layoutX="637.0" layoutY="220.0" onAction="#exportOrganisationsToXML" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="EXPORT">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
 </children>
 </AnchorPane>

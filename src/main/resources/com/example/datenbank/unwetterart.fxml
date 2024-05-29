@@ -39,22 +39,22 @@
                 </GridPane>
             </children>
         </GridPane>
-        <Button fx:id="btnNew" layoutX="46.0" layoutY="226.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
+        <Button fx:id="btnNew" layoutX="34.0" layoutY="226.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
             <font>
                 <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnSave" layoutX="227.0" layoutY="226.0" mnemonicParsing="false" onAction="#addUnwetterArt" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="SAVE" textAlignment="CENTER">
+        <Button fx:id="btnSave" layoutX="185.0" layoutY="226.0" mnemonicParsing="false" onAction="#addUnwetterArt" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="SAVE" textAlignment="CENTER">
             <font>
                 <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnUpdate" layoutX="401.0" layoutY="226.0" mnemonicParsing="false" onAction="#updateUnwetterArt" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="UPDATE">
+        <Button fx:id="btnUpdate" layoutX="341.0" layoutY="226.0" mnemonicParsing="false" onAction="#updateUnwetterArt" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="UPDATE">
             <font>
                 <Font size="14.0" />
             </font>
         </Button>
-        <Button fx:id="btnDelete" layoutX="575.0" layoutY="226.0" mnemonicParsing="false" onAction="#deleteUnwetterArt" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="DELETE">
+        <Button fx:id="btnDelete" layoutX="489.0" layoutY="226.0" mnemonicParsing="false" onAction="#deleteUnwetterArt" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="DELETE">
             <font>
                 <Font size="14.0" />
             </font>
@@ -124,8 +124,12 @@
                   <Font size="14.0" />
                </font>
             </Button>
-             <Button fx:id="exportButton" text="Export to XML" onAction="#exportUnwetterArtToXML"/>
          </children>
       </HBox>
+       <Button fx:id="exportButton" layoutX="632.0" layoutY="226.0" onAction="#exportUnwetterArtToXML" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: LIGHTGRAY; -fx-border-color: GRAY; -fx-border-width: 1;" text="EXPORT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

@@ -25,22 +25,22 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Button fx:id="btnNew" layoutX="71.0" layoutY="234.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
+      <Button fx:id="btnNew" layoutX="36.0" layoutY="234.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnSave" layoutX="239.0" layoutY="234.0" mnemonicParsing="false" onAction="#addRegion" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="SAVE" textAlignment="CENTER">
+      <Button fx:id="btnSave" layoutX="190.0" layoutY="234.0" mnemonicParsing="false" onAction="#addRegion" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="SAVE" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnUpdate" layoutX="408.0" layoutY="234.0" mnemonicParsing="false" onAction="#updateRegion" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="UPDATE">
+      <Button fx:id="btnUpdate" layoutX="340.0" layoutY="234.0" mnemonicParsing="false" onAction="#updateRegion" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="UPDATE">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnDelete" layoutX="575.0" layoutY="234.0" mnemonicParsing="false" onAction="#deleteRegion" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="DELETE">
+      <Button fx:id="btnDelete" layoutX="492.0" layoutY="234.0" mnemonicParsing="false" onAction="#deleteRegion" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="DELETE">
          <font>
             <Font size="14.0" />
          </font>
@@ -105,7 +105,6 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="exportButton" text="Export to XML" onAction="#exportRegionsToXML"/>
          </children>
       </HBox>
       <Label layoutX="96.0" layoutY="159.0" text="Region" textFill="#201f1f">
@@ -113,5 +112,10 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Button fx:id="exportButton" layoutX="650.0" layoutY="234.0" onAction="#exportRegionsToXML" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="EXPORT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -14,22 +14,22 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.SchadenController">
    <children>
-      <Button fx:id="btnNew" layoutX="53.0" layoutY="207.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
+      <Button fx:id="btnNew" layoutX="35.0" layoutY="222.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnSave" layoutX="233.0" layoutY="207.0" mnemonicParsing="false" onAction="#addSchaden" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="SAVE">
+      <Button fx:id="btnSave" layoutX="180.0" layoutY="222.0" mnemonicParsing="false" onAction="#addSchaden" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="SAVE">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnUpdate" layoutX="407.0" layoutY="207.0" mnemonicParsing="false" onAction="#updateSchaden" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="UPDATE">
+      <Button fx:id="btnUpdate" layoutX="332.0" layoutY="222.0" mnemonicParsing="false" onAction="#updateSchaden" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="UPDATE">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnDelete" layoutX="584.0" layoutY="207.0" mnemonicParsing="false" onAction="#deleteSchaden" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="DELETE">
+      <Button fx:id="btnDelete" layoutX="484.0" layoutY="222.0" mnemonicParsing="false" onAction="#deleteSchaden" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="DELETE">
          <font>
             <Font size="14.0" />
          </font>
@@ -107,8 +107,12 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="exportButton" text="Export to XML" onAction="#exportSchadenToXML"/>
          </children>
       </HBox>
+      <Button fx:id="exportButton" layoutX="637.0" layoutY="222.0" onAction="#exportSchadenToXML" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="EXPORT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
