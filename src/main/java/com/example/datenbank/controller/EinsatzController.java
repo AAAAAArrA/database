@@ -1,10 +1,13 @@
 package com.example.datenbank.controller;
 
-import com.example.datenbank.model.*;
+import com.example.datenbank.model.Einsatz;
+import com.example.datenbank.model.Ereignis;
+import com.example.datenbank.model.Organisation;
 import com.example.datenbank.service.EinsatzCRUD;
 import com.example.datenbank.service.EreignisCRUD;
 import com.example.datenbank.service.LoginService;
 import com.example.datenbank.service.OrganisationCRUD;
+import com.example.datenbank.util.JAXBUtil;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -17,12 +20,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -74,7 +80,6 @@ public class EinsatzController implements Initializable {
     @FXML
     public TableColumn<Einsatz, String> organisationName;
 
-
     @FXML
     public TableColumn<Einsatz, Date> beginn;
 
@@ -82,7 +87,6 @@ public class EinsatzController implements Initializable {
     public TableColumn<Einsatz, Date> ende;
 
     private Einsatz einsatz;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -96,17 +100,17 @@ public class EinsatzController implements Initializable {
         ereignisComboBox.setItems(FXCollections.observableList(ereignisList));
         organisationComboBox.setItems(FXCollections.observableList(organisations));
 
-        ereignisComboBox.setCellFactory(comboBox -> new ListCell<Ereignis>(){
+        ereignisComboBox.setCellFactory(comboBox -> new ListCell<Ereignis>() {
             @Override
-            protected void updateItem(Ereignis item, boolean empty){
+            protected void updateItem(Ereignis item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(empty ? " " : String.valueOf(item.getId()));
             }
         });
 
-        organisationComboBox.setCellFactory(comboBox -> new ListCell<Organisation>(){
+        organisationComboBox.setCellFactory(comboBox -> new ListCell<Organisation>() {
             @Override
-            protected void updateItem(Organisation item, boolean empty){
+            protected void updateItem(Organisation item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(empty ? " " : item.getName());
             }
@@ -114,6 +118,7 @@ public class EinsatzController implements Initializable {
 
         showEinsatz();
     }
+
     private void configureAccess(String role) {
         // Установить видимость кнопок в зависимости от роли
         switch (role) {
@@ -140,7 +145,7 @@ public class EinsatzController implements Initializable {
     }
 
     @FXML
-    private void addEinsatz(){
+    private void addEinsatz() {
         Ereignis ereignis = ereignisComboBox.getSelectionModel().getSelectedItem();
         Organisation organisation = organisationComboBox.getSelectionModel().getSelectedItem();
         LocalDate beginn = beginnDate.getValue();
@@ -158,39 +163,34 @@ public class EinsatzController implements Initializable {
     }
 
     @FXML
-    private void showEinsatz(){
+    private void showEinsatz() {
         EinsatzCRUD handler = new EinsatzCRUD();
         ObservableList<Einsatz> list = handler.getEinsatzList();
-        collId.setCellValueFactory(new PropertyValueFactory<Einsatz, Integer>("id"));
+        collId.setCellValueFactory(new PropertyValueFactory<>("id"));
         unwetter.setCellValueFactory(cellData -> {
             Einsatz einsatz1 = cellData.getValue();
-            UnwetterArt unwetter = einsatz1.getEreignis().getUnwetter();
-            return new ReadOnlyStringWrapper(unwetter != null ? unwetter.getBezeichnung() : "");
+            return new ReadOnlyStringWrapper(einsatz1.getEreignis().getUnwetter().getBezeichnung());
         });
         region.setCellValueFactory(cellData -> {
             Einsatz einsatz1 = cellData.getValue();
-            Region region1 = einsatz1.getEreignis().getRegionName();
-            return new ReadOnlyStringWrapper(region1 != null ? region1.getName() : "");
+            return new ReadOnlyStringWrapper(einsatz1.getEreignis().getRegionName().getName());
         });
-        schaden.setCellValueFactory(cellData ->{
+        schaden.setCellValueFactory(cellData -> {
             Einsatz einsatz1 = cellData.getValue();
-            Schaden schaden1 = einsatz1.getEreignis().getSchaden();
-            Integer hoeheValue = schaden1 != null ? schaden1.getHoehe() : null;
-            return new ReadOnlyObjectWrapper<>(hoeheValue);
+            return new ReadOnlyObjectWrapper<>(einsatz1.getEreignis().getSchaden().getHoehe());
         });
         organisationName.setCellValueFactory(cellData -> {
             Einsatz einsatz1 = cellData.getValue();
-            Organisation organisation = einsatz1.getOrganisation();
-            return new ReadOnlyStringWrapper(organisation != null ? organisation.getName() : " ");
+            return new ReadOnlyStringWrapper(einsatz1.getOrganisation().getName());
         });
-        beginn.setCellValueFactory(new PropertyValueFactory<Einsatz, Date>("beginn"));
-        ende.setCellValueFactory(new PropertyValueFactory<Einsatz, Date>("end"));
+        beginn.setCellValueFactory(new PropertyValueFactory<>("beginn"));
+        ende.setCellValueFactory(new PropertyValueFactory<>("end"));
         tableView.setItems(list);
     }
 
     @FXML
-    public void mouseClicked(javafx.scene.input.MouseEvent mouseEvent){
-        try{
+    public void mouseClicked(javafx.scene.input.MouseEvent mouseEvent) {
+        try {
             Einsatz einsatz = tableView.getSelectionModel().getSelectedItem();
 
             EreignisCRUD ereignisCRUD = new EreignisCRUD();
@@ -209,50 +209,47 @@ public class EinsatzController implements Initializable {
             btnUpdate.setDisable(false);
             btnDelete.setDisable(false);
             btnSave.setDisable(true);
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
+    @FXML
+    public void updateEinsatz() {
+        LocalDate begin = beginnDate.getValue();
+        LocalDate end = endDate.getValue();
 
-@FXML
-public void updateEinsatz(){
-    LocalDate begin = beginnDate.getValue();
-    LocalDate end = endDate.getValue();
+        if (begin == null || end == null) {
+            showAlert("Input Error", "Both start and end dates must be selected to update an Einsatz.");
+            return;
+        }
 
-    if (begin == null || end == null) {
-        showAlert("Input Error", "Both start and end dates must be selected to update an Einsatz.");
-        return;
+        String details = String.format("Are you sure you want to delete this Einsatz scheduled from %s to %s?",
+                this.einsatz.getBeginn().toString(), this.einsatz.getEnd().toString());
+
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, details, ButtonType.YES, ButtonType.NO);
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    EinsatzCRUD einsatzCRUD = new EinsatzCRUD();
+                    Einsatz einsatz = new Einsatz(this.einsatz.getId(), ereignisComboBox.getValue(),
+                            organisationComboBox.getValue(), java.sql.Date.valueOf(begin), java.sql.Date.valueOf(end));
+                    einsatzCRUD.updateEinsatz(einsatz);
+                    showEinsatz();
+                    clearFields();
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Update Error", "Failed to update Einsatz: " + e.getMessage());
+                }
+            }
+        });
     }
 
-
-
-    String details = String.format("Are you sure you want to delete this Einsatz scheduled from %s to %s?",
-            this.einsatz.getBeginn().toString(), this.einsatz.getEnd().toString());
-
-
-    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION, details, ButtonType.YES, ButtonType.NO);
-
-    confirmationAlert.showAndWait().ifPresent(response -> {
-        if (response == ButtonType.YES) {
-            try {
-                EinsatzCRUD einsatzCRUD = new EinsatzCRUD();
-                Einsatz einsatz = new Einsatz(this.einsatz.getId(), ereignisComboBox.getValue(),
-                        organisationComboBox.getValue(), java.sql.Date.valueOf(begin), java.sql.Date.valueOf(end));
-                einsatzCRUD.updateEinsatz(einsatz);
-                showEinsatz();
-                clearFields();
-                btnUpdate.setDisable(true);
-                btnDelete.setDisable(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert("Update Error", "Failed to update Einsatz: " + e.getMessage());
-            }
-        }
-    });
-}
     @FXML
-    public void deleteEinsatz(){
+    public void deleteEinsatz() {
         String details = String.format("Are you sure you want to delete this Einsatz scheduled from %s to %s?",
                 this.einsatz.getBeginn().toString(), this.einsatz.getEnd().toString());
 
@@ -276,6 +273,7 @@ public void updateEinsatz(){
             }
         });
     }
+
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -283,9 +281,8 @@ public void updateEinsatz(){
         alert.showAndWait();
     }
 
-
     @FXML
-    private  void clearFields(){
+    private void clearFields() {
         ereignisComboBox.setValue(null);
         organisationComboBox.setValue(null);
         beginnDate.setValue(null);
@@ -293,7 +290,7 @@ public void updateEinsatz(){
     }
 
     @FXML
-    private void clickNew(){
+    private void clickNew() {
         btnUpdate.setDisable(true);
         btnDelete.setDisable(true);
         clearFields();
@@ -315,68 +312,87 @@ public void updateEinsatz(){
 
     @FXML
     private void handleEinsatz() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/einsatz.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Einsatz Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleEreignis() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/ereignis.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Ereignis Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleOrganisation() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/organisation.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Organisation Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleRegion() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/region.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Region Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleSchaden() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/schaden.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Schaden Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleUnwetterart() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/unwetterart.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Unwetterart Interface");
         stage.setScene(scene);
         stage.show();
     }
 
+    @FXML
+    private void exportEinsatzToXML() {
+        try {
+            EinsatzCRUD einsatzCRUD = new EinsatzCRUD();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+            File file = fileChooser.showSaveDialog(new Stage());
+
+            if (file != null) {
+                FileWriter writer = new FileWriter(file);
+                String xml = JAXBUtil.toXml(einsatzCRUD.getEinsatzList());
+                writer.write(xml);
+                writer.close();
+            }
+        } catch (JAXBException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

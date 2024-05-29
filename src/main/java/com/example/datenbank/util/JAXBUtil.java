@@ -1,5 +1,6 @@
 package com.example.datenbank.util;
 
+import com.example.datenbank.model.Einsatz;
 import com.example.datenbank.model.Region;
 import com.example.datenbank.model.Schaden;
 import javafx.collections.ObservableList;
@@ -30,6 +31,10 @@ public class JAXBUtil {
             context = JAXBContext.newInstance(SchadenWrapper.class);
             wrapper = new SchadenWrapper();
             ((SchadenWrapper) wrapper).setSchadenList(list.stream().map(item -> (Schaden) item).collect(Collectors.toList()));
+        } else if (firstItem instanceof Einsatz) {
+            context = JAXBContext.newInstance(EinsatzWrapper.class);
+            wrapper = new EinsatzWrapper();
+            ((EinsatzWrapper) wrapper).setEinsatzList(list.stream().map(item -> (Einsatz) item).collect(Collectors.toList()));
         } else {
             throw new JAXBException("Unsupported type: " + clazz.getName());
         }

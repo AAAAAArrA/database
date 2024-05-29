@@ -171,6 +171,8 @@
                         <Font size="14.0" />
                     </font>
                 </Button>
+
+                <Button fx:id="exportButton" text="Export to XML" onAction="#exportEinsatzToXML"/>
             </children>
 
         </HBox>

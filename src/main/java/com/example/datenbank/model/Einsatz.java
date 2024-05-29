@@ -1,16 +1,17 @@
 package com.example.datenbank.model;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.sql.Date;
 
+@XmlRootElement(name = "Einsatz")
+@XmlType(propOrder = {"id", "ereignis", "organisation", "beginn", "end"})
 public class Einsatz {
     private int id;
-
     private Ereignis ereignis;
-
     private Organisation organisation;
-
     private Date beginn;
-
     private Date end;
 
     public Einsatz(int id, Ereignis ereignis, Organisation organisation, Date beginn, Date end) {
@@ -28,10 +29,10 @@ public class Einsatz {
         this.end = end;
     }
 
-    public Einsatz (){
-
+    public Einsatz() {
     }
 
+    @XmlElement
     public int getId() {
         return id;
     }
@@ -40,6 +41,7 @@ public class Einsatz {
         this.id = id;
     }
 
+    @XmlElement
     public Ereignis getEreignis() {
         return ereignis;
     }
@@ -48,6 +50,7 @@ public class Einsatz {
         this.ereignis = ereignis;
     }
 
+    @XmlElement
     public Organisation getOrganisation() {
         return organisation;
     }
@@ -56,6 +59,7 @@ public class Einsatz {
         this.organisation = organisation;
     }
 
+    @XmlElement
     public Date getBeginn() {
         return beginn;
     }
@@ -64,6 +68,7 @@ public class Einsatz {
         this.beginn = beginn;
     }
 
+    @XmlElement
     public Date getEnd() {
         return end;
     }
