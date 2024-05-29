@@ -3,6 +3,7 @@ package com.example.datenbank.controller;
 import com.example.datenbank.model.Region;
 import com.example.datenbank.service.LoginService;
 import com.example.datenbank.service.RegionCRUD;
+import com.example.datenbank.util.JAXBUtil;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,13 +13,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class RegionController implements Initializable {
+    @FXML
+    private Button exportButton;
+
     @FXML
     public TextField name;
 
@@ -268,5 +276,25 @@ public class RegionController implements Initializable {
         stage.setTitle("Ensatz Interface");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void exportRegionsToXML() {
+        try {
+            RegionCRUD regionCRUD = new RegionCRUD();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+            File file = fileChooser.showSaveDialog(new Stage());
+
+            if (file != null) {
+                FileWriter writer = new FileWriter(file);
+                String xml = JAXBUtil.toXml(regionCRUD.getRegionList());
+                writer.write(xml);
+                writer.close();
+            }
+        } catch (JAXBException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -105,6 +105,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
+            <Button fx:id="exportButton" text="Export to XML" onAction="#exportRegionsToXML"/>
          </children>
       </HBox>
       <Label layoutX="96.0" layoutY="159.0" text="Region" textFill="#201f1f">
