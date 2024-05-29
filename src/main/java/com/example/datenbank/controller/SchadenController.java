@@ -3,6 +3,7 @@ package com.example.datenbank.controller;
 import com.example.datenbank.model.Schaden;
 import com.example.datenbank.service.LoginService;
 import com.example.datenbank.service.SchadenCRUD;
+import com.example.datenbank.util.JAXBUtil;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,8 +13,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -54,7 +59,6 @@ public class SchadenController implements Initializable {
     }
 
     private void configureAccess(String role) {
-        // Установить видимость кнопок в зависимости от роли
         switch (role) {
             case "Admin":
                 setButtonVisibility(true, true, true, true);
@@ -66,7 +70,7 @@ public class SchadenController implements Initializable {
                 setButtonVisibility(false, false, false, false);
                 break;
             default:
-                setButtonVisibility(false, false, false, false); // Нет доступа
+                setButtonVisibility(false, false, false, false);
                 break;
         }
     }
@@ -78,13 +82,12 @@ public class SchadenController implements Initializable {
         btnDelete.setVisible(deleteVisible);
     }
 
-
     private void showSchaden() {
         SchadenCRUD handler = new SchadenCRUD();
         ObservableList<Schaden> list = handler.getSchadenList();
-        colSchadenID.setCellValueFactory(new PropertyValueFactory<Schaden, Integer>("schadenID"));
-        colHoehe.setCellValueFactory(new PropertyValueFactory<Schaden,BigDecimal>("hoehe"));
-        colBeschreibung.setCellValueFactory(new PropertyValueFactory<Schaden,String>("beschreibung"));
+        colSchadenID.setCellValueFactory(new PropertyValueFactory<>("schadenID"));
+        colHoehe.setCellValueFactory(new PropertyValueFactory<>("hoehe"));
+        colBeschreibung.setCellValueFactory(new PropertyValueFactory<>("beschreibung"));
         tableView.setItems(list);
     }
 
@@ -119,7 +122,6 @@ public class SchadenController implements Initializable {
             return;
         }
 
-
         String beschreibung = schaden.getBeschreibung();
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
                 "Are you sure, you want to update Schaden with the description: " + beschreibung + "?",
@@ -141,7 +143,7 @@ public class SchadenController implements Initializable {
                     btnUpdate.setDisable(true);
                     btnDelete.setDisable(true);
                 } catch (NumberFormatException e) {
-                    showAlert("Format error", "Please enter the correct value for Hoehe:" + e.getMessage());
+                    showAlert("Format error", "Please enter the correct value for Hoehe: " + e.getMessage());
                 } catch (Exception e) {
                     e.printStackTrace();
                     showAlert("Upgrade error", "Schaden failed to upgrade: " + e.getMessage());
@@ -158,14 +160,11 @@ public class SchadenController implements Initializable {
         alert.showAndWait();
     }
 
-
-
     public void deleteSchaden() {
         if (schaden == null) {
             showAlert("Error", "Schaden object not selected.");
             return;
         }
-
 
         String beschreibung = schaden.getBeschreibung();
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
@@ -217,67 +216,87 @@ public class SchadenController implements Initializable {
 
     @FXML
     private void handleEinsatz() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/einsatz.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Einsatz Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleEreignis() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/ereignis.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Ereignis Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleOrganisation() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/organisation.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Organisation Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleRegion() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/region.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Region Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleSchaden() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/schaden.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Schaden Interface");
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     private void handleUnwetterart() throws IOException {
-        Stage stage  = new Stage();
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/datenbank/unwetterart.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        stage.setTitle("Ensatz Interface");
+        stage.setTitle("Unwetterart Interface");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void exportSchadenToXML() {
+        try {
+            SchadenCRUD schadenCRUD = new SchadenCRUD();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+            File file = fileChooser.showSaveDialog(new Stage());
+
+            if (file != null) {
+                FileWriter writer = new FileWriter(file);
+                String xml = JAXBUtil.toXml(schadenCRUD.getSchadenList());
+                writer.write(xml);
+                writer.close();
+            }
+        } catch (JAXBException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

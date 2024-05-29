@@ -102,10 +102,12 @@
                </font>
             </Button>
             <Button fx:id="btnUnwetterart" alignment="CENTER" mnemonicParsing="false" onAction="#handleUnwetterart" prefHeight="59.0" prefWidth="146.0" style="-fx-background-color: lightblue;" text="Unwetterart">
+
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
+            <Button fx:id="exportButton" text="Export to XML" onAction="#exportSchadenToXML"/>
          </children>
       </HBox>
    </children>

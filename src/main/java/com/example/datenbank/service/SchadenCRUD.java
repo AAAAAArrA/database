@@ -33,9 +33,8 @@ public class SchadenCRUD {
             connection.getDBConnection();
             PreparedStatement stmt = connection.getCon().prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
-            Schaden schaden;
             while (rs.next()) {
-                schaden = new Schaden(rs.getInt("Schaden_ID"), rs.getInt("Hoehe"), rs.getString("Beschreibung"));
+                Schaden schaden = new Schaden(rs.getInt("Schaden_ID"), rs.getInt("Hoehe"), rs.getString("Beschreibung"));
                 list.add(schaden);
             }
             rs.close();
@@ -49,11 +48,8 @@ public class SchadenCRUD {
     public void updateSchaden(Schaden schaden) {
         try {
             connection.getDBConnection();
-            // Correct the SQL UPDATE statement syntax
             PreparedStatement stmt = connection.getCon().prepareStatement(
-                    "UPDATE Schaden " +
-                            "SET Hoehe = ?, Beschreibung = ? " +
-                            "WHERE Schaden_ID = ?");
+                    "UPDATE Schaden SET Hoehe = ?, Beschreibung = ? WHERE Schaden_ID = ?");
             stmt.setInt(1, schaden.getHoehe());
             stmt.setString(2, schaden.getBeschreibung());
             stmt.setInt(3, schaden.getSchadenID());
@@ -64,9 +60,8 @@ public class SchadenCRUD {
         }
     }
 
-
     public void deleteSchaden(Schaden schaden) {
-        String sql = "DELETE FROM [Schaden] WHERE [Schaden_ID] = ?";
+        String sql = "DELETE FROM Schaden WHERE Schaden_ID = ?";
         try {
             connection.getDBConnection();
             PreparedStatement stmt = connection.getCon().prepareStatement(sql);
@@ -78,10 +73,8 @@ public class SchadenCRUD {
         }
     }
 
-    public Schaden getSchaden(String description, int quantity){
-        String query = "SELECT Schaden_ID, Beschreibung, Hoehe \n" +
-                "FROM Schaden\n" +
-                "WHERE Hoehe = ? AND CAST(Beschreibung AS NVARCHAR(MAX)) = ?";
+    public Schaden getSchaden(String description, int quantity) {
+        String query = "SELECT Schaden_ID, Beschreibung, Hoehe FROM Schaden WHERE Hoehe = ? AND CAST(Beschreibung AS NVARCHAR(MAX)) = ?";
         Schaden schaden = new Schaden();
         try {
             connection.getDBConnection();
@@ -89,15 +82,14 @@ public class SchadenCRUD {
             stmt.setInt(1, quantity);
             stmt.setString(2, description);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 schaden.setSchadenID(rs.getInt("Schaden_ID"));
                 schaden.setHoehe(rs.getInt("Hoehe"));
                 schaden.setBeschreibung(rs.getString("Beschreibung"));
             }
-
-
-
-        }catch (Exception e) {
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return schaden;

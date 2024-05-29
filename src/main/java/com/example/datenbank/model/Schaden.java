@@ -1,12 +1,15 @@
 package com.example.datenbank.model;
 
-import java.math.BigDecimal;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlRootElement(name = "Schaden")
+@XmlType(propOrder = {"schadenID", "hoehe", "beschreibung"})
 public class Schaden {
     private Integer schadenID;
     private Integer hoehe;
     private String beschreibung;
-
 
     public Schaden(int schadenID, Integer hoehe, String beschreibung) {
         this.schadenID = schadenID;
@@ -19,10 +22,10 @@ public class Schaden {
         this.beschreibung = beschreibung;
     }
 
-    public Schaden(){
-
+    public Schaden() {
     }
 
+    @XmlElement
     public int getSchadenID() {
         return schadenID;
     }
@@ -31,6 +34,7 @@ public class Schaden {
         this.schadenID = schadenID;
     }
 
+    @XmlElement
     public Integer getHoehe() {
         return hoehe;
     }
@@ -39,6 +43,7 @@ public class Schaden {
         this.hoehe = hoehe;
     }
 
+    @XmlElement
     public String getBeschreibung() {
         return beschreibung;
     }
