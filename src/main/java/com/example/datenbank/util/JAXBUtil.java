@@ -1,6 +1,7 @@
 package com.example.datenbank.util;
 
 import com.example.datenbank.model.Einsatz;
+import com.example.datenbank.model.Organisation;
 import com.example.datenbank.model.Region;
 import com.example.datenbank.model.Schaden;
 import javafx.collections.ObservableList;
@@ -27,6 +28,10 @@ public class JAXBUtil {
             context = JAXBContext.newInstance(RegionWrapper.class);
             wrapper = new RegionWrapper();
             ((RegionWrapper) wrapper).setRegions(list.stream().map(item -> (Region) item).collect(Collectors.toList()));
+        } else if (firstItem instanceof Organisation) {
+            context = JAXBContext.newInstance(OrganisationWrapper.class);
+            wrapper = new OrganisationWrapper();
+            ((OrganisationWrapper) wrapper).setOrganisations(list.stream().map(item -> (Organisation) item).collect(Collectors.toList()));
         } else if (firstItem instanceof Schaden) {
             context = JAXBContext.newInstance(SchadenWrapper.class);
             wrapper = new SchadenWrapper();

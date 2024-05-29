@@ -3,6 +3,7 @@ package com.example.datenbank.controller;
 import com.example.datenbank.model.Organisation;
 import com.example.datenbank.service.LoginService;
 import com.example.datenbank.service.OrganisationCRUD;
+import com.example.datenbank.util.JAXBUtil;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,13 +13,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class OrganisationController implements Initializable {
+    @FXML
+    private Button exportButton;
+
     @FXML
     public TextField name;
 
@@ -115,33 +123,33 @@ public class OrganisationController implements Initializable {
     }
 
 
-public void updateOrganisation() {
+    public void updateOrganisation() {
 
-    String currentName = name.getText();
-
-
-    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
-            "Are you sure you want to update the Organisation with the name: " + currentName + "?",
-            ButtonType.YES, ButtonType.NO);
+        String currentName = name.getText();
 
 
-    confirmationAlert.showAndWait().ifPresent(response -> {
-        if (response == ButtonType.YES) {
-            try {
-                OrganisationCRUD handler = new OrganisationCRUD();
-                Organisation organisation = new Organisation(this.organisation.getId(), currentName);
-                handler.updateOrganisation(organisation);
-                showOrganisation();
-                clearFields();
-                btnUpdate.setDisable(true);
-                btnDelete.setDisable(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert("Update error", "Failed to update Organisation: " + e.getMessage());
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to update the Organisation with the name: " + currentName + "?",
+                ButtonType.YES, ButtonType.NO);
+
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    OrganisationCRUD handler = new OrganisationCRUD();
+                    Organisation organisation = new Organisation(this.organisation.getId(), currentName);
+                    handler.updateOrganisation(organisation);
+                    showOrganisation();
+                    clearFields();
+                    btnUpdate.setDisable(true);
+                    btnDelete.setDisable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert("Update error", "Failed to update Organisation: " + e.getMessage());
+                }
             }
-        }
-    });
-}
+        });
+    }
     public void deleteOrganisation() {
 
         String currentName = this.organisation.getName();
@@ -189,6 +197,25 @@ public void updateOrganisation() {
         btnSave.setDisable(false);
     }
 
+    @FXML
+    private void exportOrganisationsToXML() {
+        try {
+            OrganisationCRUD organisationCRUD = new OrganisationCRUD();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML Files", "*.xml"));
+            File file = fileChooser.showSaveDialog(new Stage());
+
+            if (file != null) {
+                FileWriter writer = new FileWriter(file);
+                String xml = JAXBUtil.toXml(organisationCRUD.getOrganisationList());
+                writer.write(xml);
+                writer.close();
+            }
+        } catch (JAXBException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void handleBackButtonAction(ActionEvent event) {
@@ -268,8 +295,5 @@ public void updateOrganisation() {
         stage.setScene(scene);
         stage.show();
     }
-
-
-
 
 }
