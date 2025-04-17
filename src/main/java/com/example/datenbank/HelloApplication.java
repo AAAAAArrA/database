@@ -1,5 +1,6 @@
 package com.example.datenbank;
 
+import com.example.datenbank.controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,11 +20,12 @@ public class HelloApplication extends Application {
 
 
             Scene scene = new Scene(root);
-
-
-            stage.setTitle("База данных 'Unwetter'");
             stage.setScene(scene);
+            stage.setTitle("База данных 'Unwetter'");
+
+            LoginController controller = loader.getController();
             stage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,8 +34,7 @@ public class HelloApplication extends Application {
 }
 
     public static void main(String[] args) {
-
-        launch();
+        launch(args);
         DBConnection db = new DBConnection();
         db.getDBConnection();
     }

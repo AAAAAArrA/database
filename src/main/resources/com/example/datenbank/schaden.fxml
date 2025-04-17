@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.SchadenController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.datenbank.controller.SchadenController">
    <children>
       <Button fx:id="btnNew" layoutX="35.0" layoutY="222.0" mnemonicParsing="false" onAction="#clickNew" prefHeight="26.0" prefWidth="120.0" style="-fx-background-color: lightgray; -fx-border-color: gray; -fx-border-width: 1;" text="NEW">
          <font>
@@ -43,12 +43,12 @@
       </TableView>
       <TextField fx:id="tfHoehe" layoutX="279.0" layoutY="104.0" prefHeight="26.0" prefWidth="166.0" style="-fx-background-color: #FFFAF0; -fx-border-color: lightgray; -fx-border-width: 1;" />
       <TextField fx:id="tfBeschreibung" layoutX="279.0" layoutY="136.0" prefWidth="165.0" style="-fx-background-color: #FFFAF0; -fx-border-color: lightgray; -fx-border-width: 1;" />
-      <Label layoutX="102.0" layoutY="102.0" prefHeight="27.0" prefWidth="138.0" text="Beschreibung">
+      <Label layoutX="102.0" layoutY="136.0" prefHeight="27.0" prefWidth="138.0" text="Beschreibung">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="102.0" layoutY="135.0" text="Hoehe">
+      <Label layoutX="102.0" layoutY="104.0" text="Hoehe">
          <font>
             <Font size="18.0" />
          </font>
